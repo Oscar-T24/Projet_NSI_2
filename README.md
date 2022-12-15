@@ -1,6 +1,16 @@
 
 # 6 Fonctions à faire
 https://github.com/Oscar-T24/Projet_NSI_2
+
+
+niveaux_de_gris(image) => Jad
+miroir(image) => Arno
+flou(image) => Oscar
+fonctions de stéganographie : cache_image(im1, im2) et
+retrouve_image(image)
+et une fonction de votre choix.
+
+
 import PILLOW
 
 # Utilisation du module pillow
