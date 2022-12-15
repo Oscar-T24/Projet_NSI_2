@@ -8,19 +8,17 @@ from PIL import Image
 def miroir(image):
     # On ouvre l'image
     img = Image.open(image)
-    # On récupère la taille de l'image
-    largeur, hauteur = img.size
+    img = img.convert('RGB')
+    longueur, largeur = img.size
+    # On récupère les pixels de l'image et on inverse l'image horizontalement
+    pixels = [[img.getpixel((x, y)) for x in range(longueur)] for y in range(largeur)]
+    pixels = [ligne[::-1] for ligne in pixels]
     # On crée une nouvelle image
-    img2 = Image.new('RGB', (largeur, hauteur))
-    # On parcourt l'image
-    for x in range(largeur):
-        for y in range(hauteur):
-            # On récupère la couleur du pixel
-            couleur = img.getpixel((x, y))
-            # On la place dans la nouvelle image
-            img2.putpixel((largeur - x - 1, y), couleur)
+    img2 = Image.new('RGB', (longueur, largeur))
+    # On met les pixels dans l'image
+    img2.putdata([pixel for ligne in pixels for pixel in ligne])
     # On sauvegarde l'image
     img2.save('miroir.png')
 
 # On appelle la fonction
-miroir('image.png')
+miroir('chien.png')
