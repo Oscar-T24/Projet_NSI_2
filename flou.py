@@ -1,8 +1,8 @@
 from PIL import Image
 # NE FONCTIONERA PAS AVEC UINE IMAGE SAS FOND(pour les PNG)
 
-image = Image.open('Capture d’écran 2022-12-15 à 19.53.18.png')
-
+image = Image.open('Capture d’écran 2022-12-16 à 13.12.41.png')
+taille_init = (image.width,image.height)
 image = image.resize((300,300))
 
 def flou(image,pixels):
@@ -29,18 +29,18 @@ def flou2(image):
     rgb_im = image.convert('RGB')
     rgb_im_final = rgb_im.copy()
     
-    for e in range(0,image.width-1):
-        for e2 in range(0,image.height-1):
+    for e in range(0,image.width-10):
+        for e2 in range(0,image.height-10):
             liste_rgb = []
-            for voisin_x in range(e-1,e+2):
-                for voisin_y in range(e2-1,e2+2):
+            for voisin_x in range(e,e+11):
+                for voisin_y in range(e2,e2+11):
                      # loiste rgb d'un des 9 pixels
                     r, g, b = rgb_im.getpixel((voisin_x,voisin_y))
                     liste_rgb.append([r,g,b])
-            moyennes = [round(sum(liste_rgb[0])/9),round(sum(liste_rgb[1])/9),round(sum(liste_rgb[2])/9)]# moyenne de chaque composante couleur des 9 pixels
-            print('moyennnes de chaque 9 pixel',moyennes)
-            for voisin_x in range(e-1,e+2):
-                for voisin_y in range(e2-1,e2+2):
+            moyennes = [round(sum(liste_rgb[0])/5),round(sum(liste_rgb[1])/5),round(sum(liste_rgb[2])/5)]# moyenne de chaque composante couleur des 9 pixels
+            #print('moyennnes de chaque 9 pixel',moyennes)
+            for voisin_x in range(e-10,e+10):
+                for voisin_y in range(e2-10,e2+10):
                     rgb_im_final.putpixel((voisin_x, voisin_y), (moyennes[0],moyennes[1],moyennes[2], 0))
             '''
             # AJOUTER ICI UNE PARTIE QUI FAITT LA MOYENNE DE CHAQUE COMPOSANT RGB DES 8 PIXELS ET RENVOI 9 TUPLES À REINSERER
