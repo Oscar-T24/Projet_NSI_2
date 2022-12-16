@@ -27,7 +27,7 @@ def flou2(image):
     '''
     taille_ini = (image.width,image.height)
     rgb_im = image.convert('RGB')
-    rgb_im_final = rgb_im
+    rgb_im_final = rgb_im.copy()
     
     for e in range(0,image.width-1):
         for e2 in range(0,image.height-1):
