@@ -1,9 +1,9 @@
 from PIL import Image
 # NE FONCTIONERA PAS AVEC UINE IMAGE SAS FOND(pour les PNG)
 
-image = Image.open('Capture d’écran 2022-12-16 à 13.12.41.png')
+image = Image.open('chien.png')
 taille_init = (image.width,image.height)
-image = image.resize((300,300))
+image = image.resize((500,500))
 
 def flou(image,pixels):
     '''
@@ -19,42 +19,45 @@ def flou(image,pixels):
     rgb_im = rgb_im.resize(taille_ini)
     rgb_im.show()
 
-flou(image,200)
+#flou(image,200)
 
-def flou2(image):
+def flou2(image): # Ajouter un facteur de floutage
     '''
     pixels = nombre de pixels en longeur et largeur
     '''
     taille_ini = (image.width,image.height)
     rgb_im = image.convert('RGB')
     rgb_im_final = rgb_im.copy()
+    moyenne_R = 0
+    moyenne_G = 0
+    moyenne_V = 0
     
-    for e in range(0,image.width-10):
-        for e2 in range(0,image.height-10):
-            liste_rgb = []
-            for voisin_x in range(e,e+11):
-                for voisin_y in range(e2,e2+11):
+    for e in range(2,image.width-4):
+        for e2 in range(2,image.height-4):
+            liste_rgb = []         
+            for voisin_x in range(e-3,e+4):
+                for voisin_y in range(e2-3,e2+4):
                      # loiste rgb d'un des 9 pixels
                     r, g, b = rgb_im.getpixel((voisin_x,voisin_y))
                     liste_rgb.append([r,g,b])
-            moyennes = [round(sum(liste_rgb[0])/5),round(sum(liste_rgb[1])/5),round(sum(liste_rgb[2])/5)]# moyenne de chaque composante couleur des 9 pixels
+            #print('liste des 24 pixels avoisinnnants',liste_rgb,'longeur',len(liste_rgb))
+            # LONGUEUR TOTALE : carré de 25 pixels
+            # ------------------------PARTIE MOYENNE DE CHAQUE COMPOSANNT ----------------------------
+            for e4 in liste_rgb:
+                moyenne_R += e4[0] 
+                moyenne_G += e4[1]
+                moyenne_V += e4[2]
+
+            moyenne_R = round(moyenne_R / 25)
+            moyenne_G = round(moyenne_G / 25)
+            moyenne_V = round(moyenne_V / 25)
+            # ----------------------------------------------------------------------------------------
             #print('moyennnes de chaque 9 pixel',moyennes)
-            for voisin_x in range(e-10,e+10):
-                for voisin_y in range(e2-10,e2+10):
-                    rgb_im_final.putpixel((voisin_x, voisin_y), (moyennes[0],moyennes[1],moyennes[2], 0))
-            '''
-            # AJOUTER ICI UNE PARTIE QUI FAITT LA MOYENNE DE CHAQUE COMPOSANT RGB DES 8 PIXELS ET RENVOI 9 TUPLES À REINSERER
-            incrementation = 0     
-            
-            # PARTIE D'ECRITURE DES PIXELS  
-            '''    
-            '''
-            for voisin_x in range(e-1,e+2):
-                for voisin_y in range(e2-1,e2+2):                   
-                    rgb_im.putpixel((voisin_x, voisin_y), (moyennes[incrementation],moyennes[incrementation], moyennes[incrementation], 0))
-                    incrementation += 1
-            '''
-            
-    rgb_im = rgb_im.resize(taille_ini)
+            for voisin_x in range(e-3,e+4):
+                for voisin_y in range(e2-3,e2+4):
+                    rgb_im_final.putpixel((voisin_x, voisin_y), (moyenne_R,moyenne_G,moyenne_V, 0))
+        
     rgb_im_final.show()
+    rgb_im.resize(500,500)
+    rgb_im.show()
 flou2(image)
