@@ -33,8 +33,8 @@ def flou2(image): # Ajouter un facteur de floutage
     moyenne_G = 0
     moyenne_V = 0
     
-    for e in range(8,image.width-8):
-        for e2 in range(8,image.height-8):
+    for e in range(image.width-8):
+        for e2 in range(image.height-8):
             liste_rgb = []         
             for voisin_x in range(e-8,e+9,4):
                 for voisin_y in range(e2-8,e2+9,4):
@@ -48,6 +48,7 @@ def flou2(image): # Ajouter un facteur de floutage
                 moyenne_R += e4[0] 
                 moyenne_G += e4[1]
                 moyenne_V += e4[2]
+            
 
             moyenne_R = round(moyenne_R / len(liste_rgb)) # 64 pixels qui onnt été choisis
             moyenne_G = round(moyenne_G / len(liste_rgb))
