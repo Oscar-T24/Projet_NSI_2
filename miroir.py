@@ -18,6 +18,8 @@ def miroir(image):
     # On met les pixels dans l'image
     img2.putdata([pixel for ligne in pixels for pixel in ligne])
     # On sauvegarde l'image
+    # affiche l'image aussi !
+    img2.show()
     img2.save('miroir.png')
 
 # On appelle la fonction

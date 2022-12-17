@@ -59,9 +59,12 @@ def flou2(image): # Ajouter un facteur de floutage
                 for voisin_y in range(e2-6,e2+6):
                     rgb_im_final.putpixel((voisin_x, voisin_y), (moyenne_R,moyenne_G,moyenne_V, 0))
             '''
+            """
             for voisin_x in range(e-8,e+9,4):
                 for voisin_y in range(e2-8,e2+9,4):
                     rgb_im_final.putpixel((voisin_x, voisin_y), (moyenne_R,moyenne_G,moyenne_V, 24))
+            """
+            rgb_im_final.putpixel((voisin_x, voisin_y), (moyenne_R,moyenne_G,moyenne_V, 24))
 
     rgb_im_final.show()
     rgb_im.show()
