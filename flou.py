@@ -1,75 +1,57 @@
-from PIL import Image
+from PIL import Image, ImageFilter
+import statistics
 # NE FONCTIONERA PAS AVEC UNE IMAGE JPEG
 # CREE UNE IMAGE FLOUTÉE E FAISANT LA MOYENNE DES PIXELKS ENVIRONNNANTS
 
-image = Image.open('poisson.png')
-taille_init = (image.width,image.height)
-image = image.resize((round(taille_init[0]/3),round(taille_init[1]/3)))
+image = Image.open('images/9.png')
 
-def flou(image,pixels):
+def flou(image,rayon): 
     '''
     pixels = nombre de pixels en longeur et largeur
-    '''
-    taille_ini = (image.width,image.height)
-    image = image.resize((pixels,pixels))
-    rgb_im = image.convert('RGB')
-    for e in range(0,image.width):
-        for e2 in range(0,image.height):
-            r, g, b= rgb_im.getpixel((e, e2))
-            rgb_im.putpixel( (e, e2), (g, 255-r, b, 0) )
-    rgb_im = rgb_im.resize(taille_ini)
-    rgb_im.show()
-
-#flou(image,200)
-
-def flou2(image): 
-    '''
-    pixels = nombre de pixels en longeur et largeur
-    img(png) -> img(png, floutée)
+    img(png), int(pixels) -> img(png, floutée)
     fait pour chaque pixel la moyene du pixel et de celle des 8 pixels avoisinants
     '''
     #taille_ini = (image.width,image.height)
-    rgb_im = image.convert('RGB')
-    rgb_im_final = rgb_im.copy()
-    moyenne_R = 0
-    moyenne_G = 0
-    moyenne_V = 0
+    rgb_im = image.convert('RGB') # on coverti en RGB pour maipuler les composantes vertes, rouges et blueus
+    rgb_im_final = rgb_im.copy() # on crée une image qui sera modifiée ; l'autre initiale est utilisée comme guide
     
-    for e in range(image.width-8):
-        for e2 in range(image.height-8):
-            liste_rgb = []         
-            for voisin_x in range(e-8,e+9,4):
-                for voisin_y in range(e2-8,e2+9,4):
-                     # loiste rgb d'un des 9 pixels
+    for x in range(rayon,image.width-(rayon+1)):
+        for y in range(rayon,image.height-(rayon+1)):
+
+            # ------------------------PARTIE PARCOURS --------------------------------------------------
+
+            liste_rgb = [0,0,0]        
+            comptage = 0
+            for voisin_x in range(x-rayon,x+rayon,rayon-1): # ON UTILISE UN INCNREMENT DE RAYON POUR NE PAS REECRIRE PLUSIEURS FOIS SUR LES MEMES PIXELS
+                for voisin_y in range(y-rayon,y+rayon,rayon-1):
                     r, g, b = rgb_im.getpixel((voisin_x,voisin_y))
-                    liste_rgb.append([r,g,b])
-            #print('liste des 24 pixels avoisinnnants',liste_rgb,'longeur',len(liste_rgb))
-            # LONGUEUR TOTALE : carré de 25 pixels
+                    liste_rgb[0] += r
+                    liste_rgb[1] += g
+                    liste_rgb[2] += b
+                    comptage += 1
+            # on obtient une liste de 9 élements(chaque element ayant une composante RGB)
+
+
             # ------------------------PARTIE MOYENNE DE CHAQUE COMPOSANNT ----------------------------
-            for e4 in liste_rgb:
-                moyenne_R += e4[0] 
-                moyenne_G += e4[1]
-                moyenne_V += e4[2]
-            
-
-            moyenne_R = round(moyenne_R / len(liste_rgb)) # 64 pixels qui onnt été choisis
-            moyenne_G = round(moyenne_G / len(liste_rgb))
-            moyenne_V = round(moyenne_V / len(liste_rgb))
+            moyenne = [round((liste_rgb[i])/comptage) for i in range(3)]
             # ----------------------------------------------------------------------------------------
-            #print('moyennnes de chaque 9 pixel',moyennes)
-            '''
-            for voisin_x in range(e-6,e+6):
-                for voisin_y in range(e2-6,e2+6):
-                    rgb_im_final.putpixel((voisin_x, voisin_y), (moyenne_R,moyenne_G,moyenne_V, 0))
-            '''
-            """
-            for voisin_x in range(e-8,e+9,4):
-                for voisin_y in range(e2-8,e2+9,4):
-                    rgb_im_final.putpixel((voisin_x, voisin_y), (moyenne_R,moyenne_G,moyenne_V, 24))
-            """
-            rgb_im_final.putpixel((voisin_x, voisin_y), (moyenne_R,moyenne_G,moyenne_V, 24))
 
+            # -----------------------------------ECRITURE PIXELS--------------------------------------
+            rgb_im_final.putpixel((x, y), (moyenne[0],moyenne[1],moyenne[2]))
+            # ----------------------------------------------------------------------------------------
     rgb_im_final.show()
     rgb_im.show()
     
-flou2(image)
+    
+flou(image,12)
+
+# CETTE FONCTION ABOUTIE A FAIRE LE FILTRE BOXBLUR DE LA LIBRAIRIE PIL
+
+# Opens a image in RGB mode
+im = Image.open('images/9.png')
+
+# Blurring the image
+im1 = im.filter(ImageFilter.BoxBlur(12))
+
+# Shows the image in image viewer
+im1.show()
