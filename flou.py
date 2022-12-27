@@ -13,7 +13,7 @@ def flou(image,rayon):
     '''
     #taille_ini = (image.width,image.height)
     rgb_im = image.convert('RGB') # on coverti en RGB pour maipuler les composantes vertes, rouges et blueus
-    rgb_im_final = rgb_im.copy() # on crée une image qui sera modifiée ; l'autre initiale est utilisée comme guide
+    rgb_im_final = Image.new('RGB',image.size) # on crée une image qui sera modifiée ; l'autre initiale est utilisée comme guide
     
     for x in range(rayon,image.width-(rayon+1)):
         for y in range(rayon,image.height-(rayon+1)):
@@ -22,13 +22,15 @@ def flou(image,rayon):
 
             liste_rgb = [0,0,0]        
             comptage = 0
-            for voisin_x in range(x-rayon,x+rayon,rayon-1): # ON UTILISE UN INCNREMENT DE RAYON POUR NE PAS REECRIRE PLUSIEURS FOIS SUR LES MEMES PIXELS
-                for voisin_y in range(y-rayon,y+rayon,rayon-1):
+            for voisin_x in range(x-rayon,x+rayon,rayon//2): # ON UTILISE UN INCNREMENT DE L     RAYON POUR NE PAS REECRIRE PLUSIEURS FOIS SUR LES MEMES PIXELS
+                for voisin_y in range(y-rayon,y+rayon,rayon//2):
                     r, g, b = rgb_im.getpixel((voisin_x,voisin_y))
                     liste_rgb[0] += r
                     liste_rgb[1] += g
                     liste_rgb[2] += b
                     comptage += 1
+            print(comptage)
+            return
             # on obtient une liste de 9 élements(chaque element ayant une composante RGB)
 
 
