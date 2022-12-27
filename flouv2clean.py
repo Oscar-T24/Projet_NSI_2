@@ -3,7 +3,7 @@ import statistics
 # NE FONCTIONERA PAS AVEC UNE IMAGE JPEG
 # CREE UNE IMAGE FLOUTÉE E FAISANT LA MOYENNE DES PIXELKS ENVIRONNNANTS
 
-image = Image.open('images/6.png')
+image = Image.open('images/9.png')
 taille_init = (image.width,image.height)
 
 def flou(image,rayon): 
