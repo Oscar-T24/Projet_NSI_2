@@ -22,9 +22,11 @@ def flou(image,pixels):
 
 #flou(image,200)
 
-def flou2(image): # Ajouter un facteur de floutage
+def flou2(image): 
     '''
     pixels = nombre de pixels en longeur et largeur
+    img(png) -> img(png, floutée)
+    fait pour chaque pixel la moyene du pixel et de celle des 8 pixels avoisinants
     '''
     #taille_ini = (image.width,image.height)
     rgb_im = image.convert('RGB')
