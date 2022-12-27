@@ -56,6 +56,8 @@ def flou(image,rayon):
     
 flou(image,8)
 
+# CETTE FONCTION ABOUTIE A FAIRE LE FILTRE BOXBLUR DE LA LIBRAIRIE PIL
+
 # Opens a image in RGB mode
 im = Image.open('images/6.png')
 
