@@ -29,8 +29,7 @@ def flou(image,rayon):
                     liste_rgb[1] += g
                     liste_rgb[2] += b
                     comptage += 1
-            print(comptage)
-            return
+
             # on obtient une liste de 9 élements(chaque element ayant une composante RGB)
 
 
