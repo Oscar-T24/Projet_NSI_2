@@ -5,7 +5,6 @@ im1 = Image.open('images/8.jpg').convert('RGB')
 im2 = Image.open('images/9.jpeg').convert('RGB')
 
 
-
 def cache_image(im1,im2):
     '''
     img,img --> img
@@ -25,23 +24,27 @@ def cache_image(im1,im2):
     # pour rappel, chaque composante d'un pixel est codée sur 8 bits : de 0 à 255 variantes d'une couleur
     for x in range(im1.width):
         for y in range(im1.height):
+            pixel1 = []
+            pixel2 = []
             r, v, b = im1.getpixel((x,y))
             r2,v2,b2 = im2.getpixel((x,y))
-            pixel1 = [bin(r)[:6],bin(v)[:6],bin(b)[:6]] # on garde les 4 premiers bits de poids fort du pixel 1``
-            #pixel1 = [pixel1[i]+(6-len(pixel1[i]))*'0' for i in range(3)] # on complete les 0 manquants
-            pixel2 = [bin(r2)[:6],bin(v2)[:6],bin(b2)[:6]] # o garde les 4 premiers bits de poids fort du pixel 2
-            #pixel2 = [pixel2[i]+(6-len(pixel2[i]))*'0' for i in range(3)] # on complete les 0 manquants
-            pixel_final = [int(pixel1[i]+pixel2[i][2:],2) for i in range(3)] # on assemble les 4 premiers bits du pixel 1 avec les 4 premier bits du pixel 2         
-            #try :
+            # ASSEMBLAGE DES 4 bits de poids fort de chaque pixel
+            
+            pixel1 = [bin(r),bin(v),bin(b)]
+            pixel2 = [bin(r2),bin(v2),bin(b2)]
+            pixel_final = [0,0,0]
+            for i in range(3):
+                pixel_final[i] = int(pixel1[i][:6]+pixel2[i][2:6],base=0)
+                #print('fusion de ' ,pixel1[i][:6], ' . et ',pixel2[i][2:6],'pour donner',pixel_final[i] )
+
             im_final.putpixel((x,y),tuple(pixel_final))
-            #except TypeError:
-                #pass
-    im_final.save('images/8+7.png')
+
+
+
+    #im_final.save('images/8+7.png')
     im_final.show()
         
 cache_image(im1,im2)
 ''
-class Steganography : 
-    def self():
-        pass
+
 
