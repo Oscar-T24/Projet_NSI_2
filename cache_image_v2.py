@@ -27,12 +27,15 @@ def cache_image(im1,im2):
         for y in range(im1.height):
             r, v, b = im1.getpixel((x,y))
             r2,v2,b2 = im2.getpixel((x,y))
+
+    # NOTE : au format binaire , les bits de poids faible sont à droite tandis que les bits de poids forts sont à gauche 
+
             pixel1 = [bin(r)[:6],bin(v)[:6],bin(b)[:6]] # on garde les 4 premiers bits de poids fort du pixel 1``
             #pixel1 = [pixel1[i]+(6-len(pixel1[i]))*'0' for i in range(3)] # on complete les 0 manquants
             pixel2 = [bin(r2)[:6],bin(v2)[:6],bin(b2)[:6]] # o garde les 4 premiers bits de poids fort du pixel 2
             #pixel2 = [pixel2[i]+(6-len(pixel2[i]))*'0' for i in range(3)] # on complete les 0 manquants
-            pixel_final = [int(pixel1[i]+pixel2[i][2:],2) for i in range(3)] # on assemble les 4 premiers bits du pixel 1 avec les 4 premier bits du pixel 2         
-            #try :
+            pixel_final = [int(pixel2[i]+pixel1[i][2:],2) for i in range(3)] # on assemble les 4 premiers bits du pixel 1 avec les 4 premier bits du pixel 2         
+
             im_final.putpixel((x,y),tuple(pixel_final))
             #except TypeError:
                 #pass
