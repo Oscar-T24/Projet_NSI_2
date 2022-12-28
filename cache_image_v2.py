@@ -31,6 +31,7 @@ def cache_image(im1,im2):
             im_final.putpixel((x,y),tuple(pixel_final))
             #except TypeError:
                 #pass
+    im_final.save('images/8+7.png')
     im_final.show()
         
 cache_image(im1,im2)
