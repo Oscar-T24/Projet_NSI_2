@@ -30,11 +30,7 @@ def cache_image(im1,im2):
             r2,v2,b2 = im2.getpixel((x,y))
             # ASSEMBLAGE DES 4 bits de poids fort de chaque pixel
             
-            pixel1 = [bin(r),bin(v),bin(b)]
-            pixel2 = [bin(r2),bin(v2),bin(b2)]
-            pixel_final = [0,0,0]
-            for i in range(3):
-                pixel_final[i] = int(pixel1[i][:6]+pixel2[i][2:6],base=0)
+            bi
                 #print('fusion de ' ,pixel1[i][:6], ' . et ',pixel2[i][2:6],'pour donner',pixel_final[i] )
 
             im_final.putpixel((x,y),tuple(pixel_final))
