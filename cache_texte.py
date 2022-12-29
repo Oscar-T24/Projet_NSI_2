@@ -3,10 +3,9 @@
 # en cas de manque de place on pourrai ajouter une compression en  RUN LENGTH ENCODING (RLE) qui serait u second 'filtre'
 
 def cache_texte(message,image):
-    binaire =  (' '.join(format(ord(x), '#010b') for x in message)).split()
-    # o recupere ici l'ecriture binaire de chaque caractere
-    print(binaire)
-    return
+    binaire =  [format(ord(x), '#010b')[2:] for x in message]
+    binaire = [[e[:len(e)//2]]+[e[len(e)//2:]] for e in binaire]
+    binaire = [element for sublist in binaire for element in sublist]
     indice = 0
     for x in image.width:
         for y in image.height:
@@ -16,6 +15,7 @@ def cache_texte(message,image):
                 break
             r,v,b = image.getpixel((x,y))
             r,v,b = masque_faibles(r), masque_faibles(v), masque_faibles(b)
+            image_final.putpixel((x,y),(r+))
 
 cache_texte(input('entrer un message ASCII à cacher'),'t')
 
