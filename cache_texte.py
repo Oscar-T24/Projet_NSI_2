@@ -1,38 +1,81 @@
 # ce code ferait notre fonction 'de_notre_chioix'
 # cela consisterait à faire un algorithme qui puisse coder un message dans uen image en utilisant l'encodage ASCII
 # en cas de manque de place on pourrai ajouter une compression en  RUN LENGTH ENCODING (RLE) qui serait u second 'filtre'
+from PIL import Image
+
+def masque(n,mode):
+    """
+    param : un entier entre 0 et 255 , dec : intensité du masquage(par defaut 4)
+    out : un entier entre 0 et 255 ; sans bits de poids faibles ou foirt selon le masque
+    """
+    match mode:
+        case 'faible':
+            return n & 0b00001111
+        case 'fort':
+            return n & 0b11110000 
+
+def decalage(n,mode,dec=4):
+    """
+    param : un entier entre 0 et 255 , dec : intensité du decalage(par defaut 4)
+    out : un entier entre 0 et 255 ; dont les bits de poids forts ont été décalés vers les bits de poids faible
+    """
+    match mode:
+        case 'droite':
+            return n >> dec 
+        case 'gauche':
+            return n << dec 
 
 def cache_texte(message,image):
-    binaire =  [format(ord(x), '#010b')[2:] for x in message]
-    binaire = [[e[:len(e)//2]]+[e[len(e)//2:]] for e in binaire]
+    image_final = image.copy()
+    binaire = [format(ord(x), '#010b') for x in message] 
+    binaire = [[decalage(masque(int(e,2),'fort'),'droite')]+[masque(int(e,2),'faible')] for e in binaire]
     binaire = [element for sublist in binaire for element in sublist]
+    print(binaire)
     indice = 0
-    for x in image.width:
-        for y in image.height:
-            if indice < len(binaire): # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
+    for x in range(image.width):
+        for y in range(image.height):
+            if indice < len(message)-2: # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
                 indice += 1
             else:
                 break
             r,v,b = image.getpixel((x,y))
-            r,v,b = masque_faibles(r), masque_faibles(v), masque_faibles(b)
-            image_final.putpixel((x,y),(r+))
+            r,v = masque(r,'fort'), masque(v,'fort')
+            image_final.putpixel((x,y),(r+binaire[indice],v+binaire[indice+1],b))
+    image_final.show()
+    image_final.save('images/messager.png', format = 'PNG')
+    print('message de longueur', len(message)*2)
 
-cache_texte(input('entrer un message ASCII à cacher'),'t')
+im1 = Image.open('images/logoIsnIrem.png').convert('RGB')
+cache_texte(input('entrer un message ASCII à cacher'),im1)
 
+def trouve_texte(image, longueur):
+    message = ''
+    indice = 0
+    binaire = []
+    for x in range(image.width):
+        for y in range(image.height):
+            if indice < longueur-2: # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
+                indice += 1
+            else:
+                break
+            r,v,b = image.getpixel((x,y))
+            r,v = masque(r,'faible'), masque(v,'faible')
+            #r,v,b = bin(decalage(r,'gauche')),bin(v),bin(decalage(b,'gauche'))
+            binaire.append(r)
+            binaire.append(v)
+    for i in range(len(binaire)-1):
+        message+=(chr(decalage(binaire[i],'gauche')+binaire[i+1]))
+        
 
-
-def masque_faibles(n,dec=4):
-    """
-    param : un entier entre 0 et 255 , dec : intensité du masquage(par defaut 4)
-    out : un entier entre 0 et 255 ; sans bits de poids faibles
-    """
-    return n & 0b11110000 
-
-
+    return message
+im_a_decoder = Image.open('images/messager.png').convert('RGB')
+print(trouve_texte(im_a_decoder,int(input('longueur du message'))))
+    
+'''
 def compression_rle(tableau):
-    '''
+    """
     parcours une matrice d'octets representant un caractere chacun
-    '''
+    """
     tableau_rle = []
     for i in range(len(tableau)): # rangée par rangée
         compte = 1
@@ -70,3 +113,4 @@ print(tableau)
 # on obtient unn tableau donnant l'encodage binaire ASCII encodé en RLE
 
 # FORMAT D'ENCODAGE  : on écrit une séquence(1 caractere autrement dit) séparé d'un espace de 0000 ; onn prend 4 bits à chaque fois
+'''
