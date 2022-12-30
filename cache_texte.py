@@ -26,25 +26,44 @@ def decalage(n,mode,dec=4):
             return n << dec 
 
 def cache_texte(message,image):
-    image_final = image.copy()
+    image_final = image.copy() # soit on crée unne ouvelle image, soit on copie l'autrre ca reste à décider
     binaire = [format(ord(x), '#010b') for x in message] 
     binaire = [[decalage(masque(int(e,2),'fort'),'droite')]+[masque(int(e,2),'faible')] for e in binaire]
     binaire = [element for sublist in binaire for element in sublist]
     print(binaire)
     indice = 0
+    liste_rgb1 = []
     for x in range(image.width):
         for y in range(image.height):
             if indice < len(message)-2: # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
                 indice += 1
             else:
                 break
+            '''
+            # ---------------- UNIQUEMET POUR DEBOGAGE
+            rouge,vert,bleu = image_final.getpixel((x,y))
+            liste_rgb1.append([rouge,vert,bleu])
+            # -----------------
+            '''
             r,v,b = image.getpixel((x,y))
             r,v = masque(r,'fort'), masque(v,'fort')
             image_final.putpixel((x,y),(r+binaire[indice],v+binaire[indice+1],b))
     image_final.show()
-    image_final.save('images/messager.png', format = 'PNG')
-    print('message de longueur', len(message)*2)
+    '''# -------------------- uniquempent debogage
+    liste_rgb2 = []
+    for x in range(2):
+        for y in range(2):
+            rouge,vert,bleu = image_final.getpixel((x,y))
+            liste_rgb2.append([rouge,vert,bleu])
 
+    '''# --------------------
+    image_final.save('images/messager.png', format = 'PNG')
+    
+    print('message de longueur', len(message)) # ATTENTION LA LONGUEUR DU MESSAGE EST DEUX FOIS MOINS LONGUE DE CELLE DES COMPOSATES À PARCOURIR
+    '''
+    print('sequennce 1 de pixels RGB', liste_rgb1)
+    print('\n sequence ouvelle (2) de pixels apres ecriture', liste_rgb2)
+    '''
 im1 = Image.open('images/logoIsnIrem.png').convert('RGB')
 cache_texte(input('entrer un message ASCII à cacher'),im1)
 
