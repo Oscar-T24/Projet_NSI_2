@@ -40,20 +40,20 @@ def cache_texte(message,image):
     indice = 0 
     '''
     for i in range(len(binaire)-2):
-        print(binaire[i],binaire[i+1],binaire[i+2])
+        print(binaire[i],binire[i+1],binaire[i+2])
     '''
-    print(binaire)
+    print('message codé en bits: ',binaire)
     for x in range(image.width):
         for y in range(image.height):
-            r,v,b = image.getpixel((x,y))
-            r = masque(r,'fort')
-             #enleve le bit de poids le plus faible. On pourrai faire plus simplement en arrondissant la composante au nombre pair le plus proche(ce qui reviendrai à enlever le premier bit 1)
-            image_final.putpixel((x,y),(r |int(binaire[indice]),v,b))
             #image_final.putpixel((x,y),(r,v,b))
-            if indice < len(binaire)-1 : # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
-                # le -3 est la car à chaque fois on ecrit de indice à indice+3 sur les composantes RGB
-                indice +=1
-            else:
+            if indice < len(binaire): # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
+                r,v,b = image.getpixel((x,y))
+                r = masque(r,'fort')
+                    #enleve le bit de poids le plus faible. On pourrai faire plus simplement en arrondissant la composante au nombre pair le plus proche(ce qui reviendrai à enlever le premier bit 1)
+                image_final.putpixel((x,y),(r |int(binaire[indice]),v,b))
+            indice +=1
+            if indice > len(binaire): # on écrit un drapeau pour marquer la fin du message (celui ci est purement arbitraire)
+                image_final.putpixel((x,y),(255 & 0b11110000,255 & 0b00001111,255 & 0b00111100))
                 break
             
     image_final.show()
@@ -69,31 +69,36 @@ def cache_texte(message,image):
     print('message de longueur', len(binaire))
     print(binaire)
 
-im1 = Image.open('images/logoIsnIrem.png').convert('RGB')
+im1 = Image.open('images/11.png').convert('RGB')
 cache_texte(input('entrer un message ASCII à cacher'),im1)
 
 
-def trouve_texte(image, longueur):
+def trouve_texte(image):
     message = ''
     indice = 0
     binaire = ''
     for x in range(image.width):
         for y in range(image.height):
             r,v,b = image.getpixel((x,y))
-            r = masque(r,'faible')
+            if r == 240 and v == 15 and b == 60: # c'est un flag random mais ya vrmt peu de chance que ca tombre dessus
+                longueur = len(binaire)
+                break
+            else:
+                r = masque(r,'faible')
             binaire+=str(r)
+            '''
             if indice < longueur-1: # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
                 indice += 1
             else:
-                break
+            '''
     binaire = binaire[:longueur]
-    print(binaire)
-    octets = [chr(int('0b'+binaire[i:i+9],2)) for i in range(longueur)]
-    #octets = ''.join([chr(int('0b'+binaire[i:i+9],2)) for i in range(longueur)]) #ecriture des octets
+    
+    print('message codé en bits retrouvé : ',binaire)
+    octets = ''.join([chr(int('0b'+binaire[i+1:i+8],2)) for i in range(0,longueur,8)]) #ecriture des octets
     print(octets)
     return message
 im_a_decoder = Image.open('images/messager.png').convert('RGB')
-trouve_texte(im_a_decoder,int(input('longueur du message')))
+trouve_texte(im_a_decoder)
    
 
 # -------------
