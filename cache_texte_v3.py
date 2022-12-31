@@ -53,7 +53,7 @@ def cache_texte(message,image):
                 image_final.putpixel((x,y),(r |int(binaire[indice]),v,b))
             indice +=1
             if indice > len(binaire): # on écrit un drapeau pour marquer la fin du message (celui ci est purement arbitraire)
-                image_final.putpixel((x,y),(255 & 0b11110000,255 & 0b00001111,255 & 0b00111100))
+                image_final.putpixel((x,y),(255 & 0b01010101,255 & 0b00001111,255 & 0b00111100))
                 break
             
     image_final.show()
@@ -80,7 +80,7 @@ def trouve_texte(image):
     for x in range(image.width):
         for y in range(image.height):
             r,v,b = image.getpixel((x,y))
-            if r == 240 and v == 15 and b == 60: # c'est un flag random mais ya vrmt peu de chance que ca tombre dessus
+            if r == 85 and v == 15 and b == 60: # c'est un flag random mais ya vrmt peu de chance que ca tombre dessus
                 longueur = len(binaire)
                 break
             else:
