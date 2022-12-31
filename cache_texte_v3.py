@@ -46,27 +46,25 @@ def cache_texte(message,image):
     for x in range(image.width):
         for y in range(image.height):
             r,v,b = image.getpixel((x,y))
-            r,v,b = masque(r,'fort'), masque(v,'fort'), masque(b,'fort')
+            r = masque(r,'fort')
              #enleve le bit de poids le plus faible. On pourrai faire plus simplement en arrondissant la composante au nombre pair le plus proche(ce qui reviendrai à enlever le premier bit 1)
-            print('ecriture de ',binaire[indice],binaire[indice+1], binaire[indice+2])
-            image_final.putpixel((x,y),(r |int(binaire[indice]),v | int(binaire[indice+1]),b | int(binaire[indice+2])))
+            image_final.putpixel((x,y),(r |int(binaire[indice]),v,b))
             #image_final.putpixel((x,y),(r,v,b))
-            if indice < len(binaire)-2 : # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
+            if indice < len(binaire)-1 : # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
                 # le -3 est la car à chaque fois on ecrit de indice à indice+3 sur les composantes RGB
                 indice +=1
             else:
                 break
             
     image_final.show()
-    # ---------------
+    '''# ---------------
     liste_rgb = []
     for x in range(8):
         for y in range(8):
             rouge,vert,bleu = image_final.getpixel((x,y))
             liste_rgb.append([rouge,vert,bleu])
     print(liste_rgb)
-    # ---------------
-    
+    '''# ---------------
     image_final.save('images/messager.png', format = 'PNG')
     print('message de longueur', len(binaire))
     print(binaire)
@@ -82,17 +80,17 @@ def trouve_texte(image, longueur):
     for x in range(image.width):
         for y in range(image.height):
             r,v,b = image.getpixel((x,y))
-            r,v,b = masque(r,'faible'), masque(v,'faible'), masque(b,'faible')
+            r = masque(r,'faible')
             binaire+=str(r)
-            binaire+=str(v)
-            binaire+=str(b)
-            if indice < longueur-2: # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
+            if indice < longueur-1: # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
                 indice += 1
             else:
                 break
-    binaire2 = ['' if i % 8 == 0 else binaire[i] for i in range(len(binaire))]
-    print(''.join(binaire2))
-
+    binaire = binaire[:longueur]
+    print(binaire)
+    octets = [chr(int('0b'+binaire[i:i+9],2)) for i in range(longueur)]
+    #octets = ''.join([chr(int('0b'+binaire[i:i+9],2)) for i in range(longueur)]) #ecriture des octets
+    print(octets)
     return message
 im_a_decoder = Image.open('images/messager.png').convert('RGB')
 trouve_texte(im_a_decoder,int(input('longueur du message')))
