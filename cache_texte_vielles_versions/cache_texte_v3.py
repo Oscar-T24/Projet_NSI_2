@@ -69,8 +69,8 @@ def cache_texte(message,image):
     print('message de longueur', len(binaire))
     print(binaire)
 
-im1 = Image.open('images/11.png').convert('RGB')
-cache_texte(input('entrer un message ASCII à cacher'),im1)
+im1 = Image.open('images/6.png').convert('RGB')
+#cache_texte(input('entrer un message ASCII à cacher'),im1)
 
 
 def trouve_texte(image):
