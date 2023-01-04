@@ -1,7 +1,9 @@
 from PIL import Image, ImageFilter
-import statistics
+
 # NE FONCTIONERA PAS AVEC UNE IMAGE JPEG
 # CREE UNE IMAGE FLOUTÉE E FAISANT LA MOYENNE DES PIXELKS ENVIRONNNANTS
+
+# ce qu'il faudrait faire : utilise une matrice (ou array pour stocker les composantes RGB de chaque 'bloc' de pixels environnants)
 
 image = Image.open('images/9.png')
 

@@ -20,7 +20,7 @@ def decalage(n,dec=4):
     return n >> dec 
 
 im1 = Image.open('images/6.png').convert('RGB').resize((500,500))
-im2 = Image.open('images/5.png').convert('RGB').resize((500,500))
+im2 = Image.open('images/9.jpeg').convert('RGB').resize((500,500))
 '''
 if im1.height > im2.height or im1.width > im2.width:
     im_final = Image.new('RGB',(im2.width,im2.height))
