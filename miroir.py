@@ -1,26 +1,21 @@
-'https://github.com/Oscar-T24/Projet_NSI_2'
-
-# Faire une fonction qui retourne l'image avec l'utilisation de la librairie pillow
-
 import PIL
 from PIL import Image
 
+image = Image.open('images/6.png').convert('RGB')
+
 def miroir(image):
-    # On ouvre l'image
-    img = Image.open(image)
-    img = img.convert('RGB')
-    longueur, largeur = img.size
+    '''
+    image --> image
+    renvoie une image retournée horizontalement
+    '''
+    longueur, largeur = image.size
     # On récupère les pixels de l'image et on inverse l'image horizontalement
-    pixels = [[img.getpixel((x, y)) for x in range(longueur)] for y in range(largeur)]
+    pixels = [[image.getpixel((x, y)) for x in range(longueur)] for y in range(largeur)]
     pixels = [ligne[::-1] for ligne in pixels]
-    # On crée une nouvelle image
-    img2 = Image.new('RGB', (longueur, largeur))
-    # On met les pixels dans l'image
-    img2.putdata([pixel for ligne in pixels for pixel in ligne])
-    # On sauvegarde l'image
-    # affiche l'image aussi !
-    img2.show()
-    img2.save('miroir.png')
+    image2 = Image.new('RGB', (longueur, largeur)) # On crée une image vide
+    image2.putdata([pixel for ligne in pixels for pixel in ligne]) # On met les pixels dans l'image
+    image2.save('outputs/miroir.png') # On sauvegarde l'image
+    image2.show() # On affiche l'image
 
 # On appelle la fonction
-miroir('chien.png')
+miroir('images/6.png')
