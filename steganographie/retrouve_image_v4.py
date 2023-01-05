@@ -27,5 +27,6 @@ def retrouve_image(im,bits_forts):
 
     im_ini1.show()
     im_ini2.show()
-
-#retrouve_image(im,4)
+    
+if __name__ == '__main__':
+    retrouve_image(im,4)

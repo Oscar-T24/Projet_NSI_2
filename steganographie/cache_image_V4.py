@@ -55,8 +55,7 @@ def cache_image(im1,im2,bits_forts):
     im_final.save('images/fusion.png')
     im_final.show()
 
-
-im1 = Image.open('images/6.png').convert('RGB').resize((500,500))
-im2 = Image.open('images/9.jpeg').convert('RGB').resize((500,500))
-
-#cache_image(im1,im2,1)
+if __name__ == '__main__':
+    im1 = Image.open('images/6.png').convert('RGB').resize((500,500))
+    im2 = Image.open('images/9.jpeg').convert('RGB').resize((500,500))
+    cache_image(im1,im2,1)
