@@ -1,8 +1,4 @@
 from PIL import Image
-n = 159                     # entier entre 0 et 255
-masque = 0b11110000         # entier en binaire, 8 bits
-
-m = n & masque
 
 
 def masque_faibles(n,dec):
@@ -10,19 +6,19 @@ def masque_faibles(n,dec):
     param : un entier entre 0 et 255 , dec : intensité du masquage: plus elle est grande, plus l'image aura de bits de poids forts
     out : un entier entre 0 et 255 ; sans bits de poids faibles
     """
-    masque = 0b00000001 * pow(2,dec)
-    masque | 0b11111111
+    masque = 0b1111111100000000 >> dec # étape 1 : décaler le 1 de dec bits(celui de base est sur 16 bitys)
+    masque & 0b11111111 #étape 2 : couper les bits en trop
+
+    # EXEMPLE A TESTER : pour dec = 4, 0b1111111100000000 >> dec donne masque = 0b11110000 ou equivalent en entier
+
     return n & masque  # opérateur bitwise qui compare la valeur binaire de n et masque(deja binaire) et renvoi la partie ou les deux morceaux binaires 's'overlappent'
 
-def decalage(n,dec=4):
+def decalage(n,dec):
     """
     param : un entier entre 0 et 255 , dec : intensité du decalage(par defaut 4)
     out : un entier entre 0 et 255 ; dont les bits de poids forts ont été décalés vers les bits de poids faible
     """
     return n >> dec 
-
-im1 = Image.open('images/6.png').convert('RGB').resize((500,500))
-im2 = Image.open('images/9.jpeg').convert('RGB').resize((500,500))
 
 def cache_image(im1,im2,bits_forts):
     """
@@ -47,7 +43,7 @@ def cache_image(im1,im2,bits_forts):
             r,v,b = masque_faibles(r,bits_forts),masque_faibles(v,bits_forts),masque_faibles(b,bits_forts) #onn effectue unn masque de bits faibles sur l'image 1
 
             # on ne garde que les bits de poids forts des composantes RGB de l'image 1
-            r2,v2,b2 = im2.getpixel((x,y))
+            r2,v2,b2,t = im2.getpixel((x,y))
             r2,v2,b2 = decalage(r2,bits_forts),decalage(v2,bits_forts),decalage(b2,bits_forts)
             # on fait passer les bits de poids fort des composantes RGB de l'image 2 en poids faible 
             im_final.putpixel((x,y),(r+r2,v+v2,b+b2))
@@ -59,3 +55,8 @@ def cache_image(im1,im2,bits_forts):
     im_final.save('images/fusion.png')
     im_final.show()
 
+
+im1 = Image.open('images/6.png').convert('RGB').resize((500,500))
+im2 = Image.open('images/9.jpeg').convert('RGB').resize((500,500))
+
+#cache_image(im1,im2,1)
