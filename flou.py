@@ -5,7 +5,7 @@ from PIL import Image, ImageFilter
 
 # ce qu'il faudrait faire : utilise une matrice (ou array pour stocker les composantes RGB de chaque 'bloc' de pixels environnants)
 
-image = Image.open('images/9.png')
+image = Image.open('images/9.jpeg')
 
 def flou(image,rayon): 
     '''
@@ -46,7 +46,7 @@ def flou(image,rayon):
     rgb_im.show()
     
     
-flou(image,12)
+flou(image,3)
 
 # CETTE FONCTION ABOUTIE A FAIRE LE FILTRE BOXBLUR DE LA LIBRAIRIE PIL
 
