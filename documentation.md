@@ -1,3 +1,9 @@
+https://towardsdatascience.com/steganography-hiding-an-image-inside-another-77ca66b2acb1
+
+https://realpython.com/lessons/binary-numbers/
+
+
+```
 from PIL import Image
 
 im = Image.open('images/fusion.png').convert('RGB') # l'image fusionnée
@@ -30,3 +36,4 @@ for x in range(im.width):
 
 im_ini1.show()
 im_ini2.show()
+```
