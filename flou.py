@@ -44,6 +44,30 @@ def flou(image,rayon):
             # ----------------------------------------------------------------------------------------
     rgb_im_final.show()
     rgb_im.show()
+
+#     import numpy as np
+
+# # Convert the image to a NumPy array
+# image_array = np.array(image)
+
+# # Compute the window size
+# window_size = 2 * rayon + 1
+
+# # Create a zero array for the output image
+# output_array = np.zeros_like(image_array)
+
+# # Iterate over the image, skipping the border pixels
+# for i in range(rayon, image.height - rayon):
+#     for j in range(rayon, image.width - rayon):
+#         # Extract the current window
+#         window = image_array[i - rayon: i + rayon + 1, j - rayon: j + rayon + 1]
+#         # Compute the average of the window
+#         avg = window.mean(axis=(0, 1))
+#         # Set the pixel value in the output image
+#         output_array[i, j] = avg
+
+# # Convert the output array back to an image
+# output_image = Image.fromarray(output_array)
     
     
 flou(image,3)
