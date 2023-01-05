@@ -5,12 +5,14 @@ masque = 0b11110000         # entier en binaire, 8 bits
 m = n & masque
 
 
-def masque_faibles(n,dec=4):
+def masque_faibles(n,dec):
     """
-    param : un entier entre 0 et 255 , dec : intensité du masquage(par defaut 4)
+    param : un entier entre 0 et 255 , dec : intensité du masquage: plus elle est grande, plus l'image aura de bits de poids forts
     out : un entier entre 0 et 255 ; sans bits de poids faibles
     """
-    return n & 0b11110000  # opérateur bitwise qui compare la valeur binaire de n et masque(deja binaire) et renvoi la partie ou les deux morceaux binaires 's'overlappent'
+    masque = 0b00000001 * pow(2,dec)
+    masque | 0b11111111
+    return n & masque  # opérateur bitwise qui compare la valeur binaire de n et masque(deja binaire) et renvoi la partie ou les deux morceaux binaires 's'overlappent'
 
 def decalage(n,dec=4):
     """
@@ -21,33 +23,39 @@ def decalage(n,dec=4):
 
 im1 = Image.open('images/6.png').convert('RGB').resize((500,500))
 im2 = Image.open('images/9.jpeg').convert('RGB').resize((500,500))
-'''
-if im1.height > im2.height or im1.width > im2.width:
-    im_final = Image.new('RGB',(im2.width,im2.height))
-    im1.resize((im2.width,im2.height))
-else :
+
+def cache_image(im1,im2,bits_forts):
+    """
+    cache une image(im2) dans une autre image(im1) à l'aide de stéganogtraphie
+    bits_forts : repartition des bits de poids forts de l'image 1 apres reduction
+    """
+    '''
+    if im1.height > im2.height or im1.width > im2.width:
+        im_final = Image.new('RGB',(im2.width,im2.height))
+        im1.resize((im2.width,im2.height))
+    else :
+        im_final = Image.new('RGB',(im1.width,im1.height))
+        im2.resize((im1.width,im1.height))
+    '''
     im_final = Image.new('RGB',(im1.width,im1.height))
-    im2.resize((im1.width,im1.height))
-'''
-im_final = Image.new('RGB',(im1.width,im1.height))
-print(im1.size)
-print(im2.size)
+    print(im1.size)
+    print(im2.size)
 
-for x in range(im1.width):
-    for y in range(im1.height):
-        r,v,b = im1.getpixel((x,y))
-        r,v,b = masque_faibles(r),masque_faibles(v),masque_faibles(b)
+    for x in range(im1.width):
+        for y in range(im1.height):
+            r,v,b = im1.getpixel((x,y))
+            r,v,b = masque_faibles(r,bits_forts),masque_faibles(v,bits_forts),masque_faibles(b,bits_forts) #onn effectue unn masque de bits faibles sur l'image 1
 
-        # on ne garde que les bits de poids forts des composantes RGB de l'image 1
-        r2,v2,b2 = im2.getpixel((x,y))
-        r2,v2,b2 = decalage(r2),decalage(v2),decalage(b2)
-        # on fait passer les bits de poids fort des composantes RGB de l'image 2 en poids faible 
-        im_final.putpixel((x,y),(r+r2,v+v2,b+b2))
-        # on assembles les deux enntiers :
-            # l'un étant codé sur 4 bits en poids fort (0 < n < 2^8-2^4)
-            # l'autre étant codé sur 4 bits en poids faible(0 < n < 2^5-1)
-            # avec ca o ne risque pas de dépasser la limite de 255
-            # par contre on a une erreur de 32 maximale pour chaque composante
-im_final.save('images/fusion.png')
-im_final.show()
+            # on ne garde que les bits de poids forts des composantes RGB de l'image 1
+            r2,v2,b2 = im2.getpixel((x,y))
+            r2,v2,b2 = decalage(r2,bits_forts),decalage(v2,bits_forts),decalage(b2,bits_forts)
+            # on fait passer les bits de poids fort des composantes RGB de l'image 2 en poids faible 
+            im_final.putpixel((x,y),(r+r2,v+v2,b+b2))
+            # on assembles les deux enntiers :
+                # l'un étant codé sur 4 bits en poids fort (0 < n < 2^8-2^4)
+                # l'autre étant codé sur 4 bits en poids faible(0 < n < 2^5-1)
+                # avec ca o ne risque pas de dépasser la limite de 255
+                # par contre on a une erreur de 32 maximale pour chaque composante
+    im_final.save('images/fusion.png')
+    im_final.show()
 

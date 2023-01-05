@@ -12,17 +12,17 @@ def decalage(n,dec=4):
     """
     # comme on fait le processus inverse, on utilise le bitwise das l'autre sens
     return n << dec
+def retrouve_image(im,bits_forts):
+    for x in range(im.width):
+        for y in range(im.height):
+            r,v,b = im.getpixel((x,y))
+            r1,v1,b1 = masque_faibles(r),masque_faibles(v),masque_faibles(b)
+            r2,v2,b2 = decalage(r)&0b11111111,decalage(v)&0b11111111,decalage(b)&0b11111111
+            
+            # on utilise & 0b11111111 pour garder que 8 bits car en decalant on multiplie par 2 / on ajoute des zeros à gauche ce qui fait que l'image 2 dépasse 255
 
-for x in range(im.width):
-    for y in range(im.height):
-        r,v,b = im.getpixel((x,y))
-        r1,v1,b1 = masque_faibles(r),masque_faibles(v),masque_faibles(b)
-        r2,v2,b2 = decalage(r)&0b11111111,decalage(v)&0b11111111,decalage(b)&0b11111111
-        
-        # on utilise & 0b11111111 pour garder que 8 bits car en decalant on multiplie par 2 / on ajoute des zeros à gauche ce qui fait que l'image 2 dépasse 255
+            im_ini1.putpixel((x,y),(r1,v1,b1))
+            im_ini2.putpixel((x,y),(r2,v2,b2))
 
-        im_ini1.putpixel((x,y),(r1,v1,b1))
-        im_ini2.putpixel((x,y),(r2,v2,b2))
-
-im_ini1.show()
-im_ini2.show()
+    im_ini1.show()
+    im_ini2.show()
