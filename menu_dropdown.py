@@ -54,11 +54,11 @@ def show():
    label.config( text = clicked.get())
    try :
       image1 = Image.open('images/'+clicked.get())
-      image1.resize((50,50))
+      image1.resize((10,10))
       test = ImageTk.PhotoImage(image1)
       label1 = tkinter.Label(image=test)
       label1.image = test
-      label1.place(x=50, y=50)
+      label1.place(x=80, y=80)
       #time.sleep(5)
       #label1.destroy()
    except FileNotFoundError:
@@ -67,7 +67,7 @@ def show():
    # Dropdown menu options
 
 options = os.listdir('images')
-options = [e for e in options if 'png' or 'jpg' or 'jpeg' in e and 'fusion.png' not in e]
+options = [e for e in options if '.png' or '.jpg' or '.jpeg' in e and 'fusion.png' not in e]
 
    # datatype of menu text
 clicked = StringVar()
@@ -80,15 +80,13 @@ clicked.set( "choisissez une photo" )
 drop = OptionMenu( root , clicked , *options )
 drop.pack()
 
-   # Create button, it will change label text
+# instatiation des boutons à partir de la classe Bouton
 button = Button( root , text = "choisir cette image" ,command = show).pack()
+comfirmer = Button(root, text = 'fermer et commencer',command = lambda:root.quit()).pack()
 
-
-   # Create Label
+  
 label = Label(root , text = " " )
 label.pack()
-
-
 
    # Execute tkinter
 
