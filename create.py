@@ -19,7 +19,7 @@ def create():
     DATA_DIR.mkdir(exist_ok=True)
 
 
-    openai.api_key = "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"
+    openai.api_key = "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"
 
 
     response = openai.Image.create(
