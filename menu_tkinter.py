@@ -43,51 +43,49 @@ from PIL import Image, ImageTk
 import os
 import time
 
-# Create object
-root = Tk()
+def choisir_image():
+   menu1 = Tk()
+   menu1.geometry( "300x300" )
+   def show():
+      label.config( text = clicked.get())
+      try :
+         image1 = Image.open('images/'+clicked.get()).resize((170,170))
+         test = ImageTk.PhotoImage(image1)
+         label1 = tkinter.Label(image=test)
+         label1.image = test
+         label1.place(x=80, y=100)
+         #time.sleep(5)
+         #label1.destroy()
 
-# Adjust size
-root.geometry( "200x200" )
+      except FileNotFoundError:
+         print('fichier inexistant')
+   options = os.listdir('images')
+   options = [e for e in options if '.png' or '.jpg' or '.jpeg' in e and 'fusion.png' not in e]
+   clicked = StringVar()
+   clicked.set( "choisissez une photo" )
+   drop = OptionMenu( menu1 , clicked , *options )
+   drop.pack()
+   # instatiation des boutons à partir de la classe Bouton
+   button = Button( menu1 , text = "choisir cette image" ,command = show).pack()
+   comfirmer = Button(menu1, text = 'fermer et commencer',command = lambda:menu1.quit()).pack()
+   label = Label(menu1 , text = " " )
+   label.pack()
 
-# Change the label text
-def show():
-   label.config( text = clicked.get())
-   try :
-      image1 = Image.open('images/'+clicked.get()).resize((170,170))
-      test = ImageTk.PhotoImage(image1)
-      label1 = tkinter.Label(image=test)
-      label1.image = test
-      label1.place(x=80, y=100)
-      #time.sleep(5)
-      #label1.destroy()
-   except FileNotFoundError:
-      print('fichier inexistant')
-      
-   # Dropdown menu options
+   menu1.mainloop() # executer le premier menu 
 
-options = os.listdir('images')
-options = [e for e in options if '.png' or '.jpg' or '.jpeg' in e and 'fusion.png' not in e]
+   return 'images/'+clicked.get()
 
-   # datatype of menu text
-clicked = StringVar()
+def menu_options():
+   menu = Tk()
+   menu.geometry( "300x300" )
+   clicked = StringVar()
+   clicked.set( "choisissez une photo" )
+   bouton = Button( menu , text = "retrouver une image" ,command = retrouve_image).pack()
+   bouton2 = Button(menu, text = 'cacher une image',command = cache_image).pack()
+   label = Label(menu , text = " " )
+   label.pack() 
 
-
-   # initial menu text
-clicked.set( "choisissez une photo" )
-
-   # Create Dropdown menu
-drop = OptionMenu( root , clicked , *options )
-drop.pack()
-
-# instatiation des boutons à partir de la classe Bouton
-button = Button( root , text = "choisir cette image" ,command = show).pack()
-comfirmer = Button(root, text = 'fermer et commencer',command = lambda:root.quit()).pack()
-
-  
-label = Label(root , text = " " )
-label.pack()
-
-   # Execute tkinter
-
-root.mainloop()
-print('images/'+clicked.get())
+   menu.mainloop() # executer le premier menu 
+   
+def retrouve_image():
+   choisir_image

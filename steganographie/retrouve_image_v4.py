@@ -1,9 +1,6 @@
 from PIL import Image
 from cache_image_V4 import masque_faibles
 
-im = Image.open('images/fusion.png').convert('RGB') # l'image fusionnée
-im_ini1 = Image.new('RGB',im.size) # on est contraint d'utiliser la taille de l'image fusionnée
-im_ini2 = Image.new('RGB',im.size)
 
 def decalage(n,dec):
     """
@@ -13,10 +10,14 @@ def decalage(n,dec):
     # comme on fait le processus inverse, on utilise le bitwise das l'autre sens
     return n << dec
 
-def retrouve_image(im,bits_forts):
-    for x in range(im.width):
-        for y in range(im.height):
-            r,v,b = im.getpixel((x,y))
+def retrouve_image(im_path,bits_forts):
+    image = Image.open(im_path).convert('RGB') # l'image fusionnée
+    im_ini1 = Image.new('RGB',image.size) 
+    im_ini2 = Image.new('RGB',image.size)
+
+    for x in range(image.width):
+        for y in range(image.height):
+            r,v,b = image.getpixel((x,y))
             r1,v1,b1 = masque_faibles(r,bits_forts),masque_faibles(v,bits_forts),masque_faibles(b,bits_forts)
             r2,v2,b2 = decalage(r,bits_forts)&0b11111111,decalage(v,bits_forts)&0b11111111,decalage(b,bits_forts)&0b11111111
             
@@ -29,4 +30,4 @@ def retrouve_image(im,bits_forts):
     im_ini2.show()
     
 if __name__ == '__main__':
-    retrouve_image(im,4)
+    pass

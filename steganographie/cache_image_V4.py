@@ -20,19 +20,13 @@ def decalage(n,dec):
     """
     return n >> dec 
 
-def cache_image(im1,im2,bits_forts):
+def cache_image(im1_path,im2_path,bits_forts):
     """
     cache une image(im2) dans une autre image(im1) à l'aide de stéganogtraphie
     bits_forts : repartition des bits de poids forts de l'image 1 apres reduction
     """
-    '''
-    if im1.height > im2.height or im1.width > im2.width:
-        im_final = Image.new('RGB',(im2.width,im2.height))
-        im1.resize((im2.width,im2.height))
-    else :
-        im_final = Image.new('RGB',(im1.width,im1.height))
-        im2.resize((im1.width,im1.height))
-    '''
+    im1 = Image.open(im1_path).convert('RGB').resize((500,500))
+    im2 = Image.open(im2_path).convert('RGB').resize((500,500))
     im_final = Image.new('RGB',(im1.width,im1.height))
     print(im1.size)
     print(im2.size)
@@ -43,7 +37,7 @@ def cache_image(im1,im2,bits_forts):
             r,v,b = masque_faibles(r,bits_forts),masque_faibles(v,bits_forts),masque_faibles(b,bits_forts) #onn effectue unn masque de bits faibles sur l'image 1
 
             # on ne garde que les bits de poids forts des composantes RGB de l'image 1
-            r2,v2,b2,t = im2.getpixel((x,y))
+            r2,v2,b2 = im2.getpixel((x,y))
             r2,v2,b2 = decalage(r2,bits_forts),decalage(v2,bits_forts),decalage(b2,bits_forts)
             # on fait passer les bits de poids fort des composantes RGB de l'image 2 en poids faible 
             im_final.putpixel((x,y),(r+r2,v+v2,b+b2))
