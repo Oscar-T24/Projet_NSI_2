@@ -53,12 +53,11 @@ root.geometry( "200x200" )
 def show():
    label.config( text = clicked.get())
    try :
-      image1 = Image.open('images/'+clicked.get())
-      image1.resize((10,10))
+      image1 = Image.open('images/'+clicked.get()).resize((170,170))
       test = ImageTk.PhotoImage(image1)
       label1 = tkinter.Label(image=test)
       label1.image = test
-      label1.place(x=80, y=80)
+      label1.place(x=80, y=100)
       #time.sleep(5)
       #label1.destroy()
    except FileNotFoundError:
@@ -91,3 +90,4 @@ label.pack()
    # Execute tkinter
 
 root.mainloop()
+print('images/'+clicked.get())

@@ -8,7 +8,8 @@ root = Tk()
 image1 = Image.open("images/10.png")
 test = ImageTk.PhotoImage(image1)
 
-label1 = tkinter.Label(image=test)
+label1 = tkinter.Label(image=test,anchor= CENTER)
+label1.pack(expand = True)
 label1.image = test
 
 # Position image
