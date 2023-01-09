@@ -17,7 +17,7 @@ def create():
     #DATA_DIR.mkdir(exist_ok=True)
 
 
-    openai.api_key = "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"
+    openai.api_key = "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"
 
 
     response = openai.Image.create(
@@ -34,7 +34,7 @@ def create():
 
 
     #file_name = DATA_DIR / f"{PROMPT[:5]}-{response['created']}.json"
-    nom = 'image_open_AI_generee-le_str'+str(now)+".json"
+    nom = 'image_open_AI_generee-le_'+str(now)+".json"
     file_name = DATA_DIR / nom
 
 
