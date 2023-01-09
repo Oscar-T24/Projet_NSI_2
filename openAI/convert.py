@@ -2,20 +2,22 @@
 
 
 import json
-
 from base64 import b64decode
-
 from pathlib import Path
+from datetime import date
+
+now = date.today()
 
 def convert():
     DATA_DIR = Path.cwd() / "responses"
 
     #JSON_FILE = DATA_DIR / '/Users/oscartesniere/Documents/GitHub/Projet_NSI_2/responses/image_AI.json'
-    JSON_FILE = DATA_DIR / '/Users/oscartesniere/Documents/GitHub/Projet_NSI_2/responses/image_AI.json'
-    IMAGE_DIR = Path.cwd() / "images" / JSON_FILE.stem
+    nom = '/Users/oscartesniere/Documents/GitHub/Projet_NSI_2/responses/image_open_AI_generee-le_'+str(now)+'.json'
+    JSON_FILE = DATA_DIR / nom
+    IMAGE_DIR = Path.cwd() / "images" #/ JSON_FILE.stem
 
 
-    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    #IMAGE_DIR.mkdir(parents=True, exist_ok=True)
 
 
     with open(JSON_FILE, mode="r", encoding="utf-8") as file:

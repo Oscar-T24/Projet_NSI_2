@@ -1,5 +1,5 @@
-from openAI.create import create
-from openAI.convert import convert
+from create import create
+from convert import convert
 
 def main():
     create()

@@ -2,13 +2,11 @@
 
 
 import json
-
 import os
-
 from pathlib import Path
-
-
 import openai
+from datetime import date
+now = date.today()
 
 def create():
     PROMPT = input(' \n entrer un descriptif d"image à créer \n')
@@ -16,10 +14,10 @@ def create():
     DATA_DIR = Path.cwd() / "responses"
 
 
-    DATA_DIR.mkdir(exist_ok=True)
+    #DATA_DIR.mkdir(exist_ok=True)
 
 
-    openai.api_key = "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"
+    openai.api_key = "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"
 
 
     response = openai.Image.create(
@@ -36,7 +34,8 @@ def create():
 
 
     #file_name = DATA_DIR / f"{PROMPT[:5]}-{response['created']}.json"
-    file_name = DATA_DIR / "image_AI.json"
+    nom = 'image_open_AI_generee-le_str'+str(now)+".json"
+    file_name = DATA_DIR / nom
 
 
     with open(file_name, mode="w", encoding="utf-8") as file:
