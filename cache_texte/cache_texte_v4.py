@@ -10,6 +10,7 @@ chr(x) : binnaire (obxxxxxxxx) --> caractere ASCII
 
 '''
 from PIL import Image
+from methode_Cesar import encode_words, decode_words
 
 def masque(n,mode,dec=4):
     """
@@ -32,6 +33,7 @@ def decalage(n,mode,dec=4):
             return n >> dec 
         case 'gauche':
             return n << dec 
+# -------------------- CACHE TEXTE -------------------------------------------
 def cache_texte(message,image):
     """
     param : un message en caractere ASCII , et une image dans laquelle encoder le message
@@ -39,6 +41,7 @@ def cache_texte(message,image):
     """
     image_final = image.copy() #copier l'image permet d'evioter à parcourir à nouveau l'image enj entier mais juste la partie dans laquelle on code le message
     longueur = bin(len(message))[:2]
+    message = encode_words(message,int(input('entrer un decalage pour crypter le texte. Ne l"oubliez pas pour recupéer le message!')))
     binaire = [format(ord(x), '#010b') for x in message] # binaire : liste d'octets codant chacun un caratère (au format 0bxxxxxxxx en string)
     binaire = ''.join([digit for octet in binaire for digit in octet[2:]]) # binaire : liste de digits les uns derriere les autres sans 0b
     indice = 0 
@@ -60,11 +63,7 @@ def cache_texte(message,image):
     image_final.save('images/messager.png', format = 'PNG')
     print('message de longueur', len(binaire))
     print(binaire)
-
-im1 = Image.open('images/11.png').convert('RGB')
-#cache_texte(input('entrer un message ASCII à cacher'),im1)
-
-
+# -------------------- TROUVE TEXTE -------------------------------------------
 def trouve_texte(image):
     """
     retrouve un texte caché dans une image
@@ -87,10 +86,12 @@ def trouve_texte(image):
     
     print('message codé en bits retrouvé : ',binaire)
     octets = ''.join([chr(int('0b'+binaire[i+1:i+8],2)) for i in range(0,longueur,8)]) #ecriture des octets
-    print(octets)
-    return message
+    return decode_words(octets,int(input('entrer la clé de dechiffrage')))
+
+im1 = Image.open('images/11.png').convert('RGB')
+cache_texte(input('entrer un message à cacher',im1))
 im_a_decoder = Image.open('images/messager.png').convert('RGB')
-trouve_texte(im_a_decoder)
+print(trouve_texte(im_a_decoder))
 
 ''' texte lorem ipsum pour tester ! 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -111,4 +112,3 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
        Nunc pretium ipsum vel mi ultrices, sit amet luctus erat pellentesque. 
        Curabitur consequat justo mi, a posuere lectus
 '''
-#image = steganographie.open
