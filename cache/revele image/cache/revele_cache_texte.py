@@ -89,7 +89,7 @@ def trouve_texte(image):
     return decode_words(octets,int(input('entrer la clé de dechiffrage')))
 
 im1 = Image.open('images/11.png').convert('RGB')
-cache_texte(input('entrer un message à cacher',im1))
+cache_texte(input('entrer un message à cacher'),im1)
 im_a_decoder = Image.open('images/messager.png').convert('RGB')
 print(trouve_texte(im_a_decoder))
 
