@@ -1,39 +1,59 @@
+# Projet NSI 2 - Oscar , Arnaud et Jad 
 
-# 6 Fonctions à faire
-https://github.com/Oscar-T24/Projet_NSI_2
+Notre projet est une compilation de manipulation d'images executables dans le terminal avec une interface graphique basée sur tkinter.
 
+## Principe
 
-niveaux_de_gris(image) => Jad
-miroir(image) => Arno
-flou(image) => Oscar
-fonctions de stéganographie : cache_image(im1, im2) et
-retrouve_image(image)
-et une fonction de votre choix.
+Ajouter description des fonctions ici
 
+## Prérequis
 
-import PILLOW
+Nous vous recommendons plusieurs choses avant avant de telecharger et lancer votre code:
+- Vérifier que vous avez installé la librairie [tkinter] 
 
-# Utilisation du module pillow
-https://apprendrepython.com/comment-utiliser-pillow-pil-python-imaging-library/
+Pour cela, utiliez le package manager [pip](https://pip.pypa.io/en/stable/) pour installer [tkinter]
 
+```bash
+pip3 install tkinter
+```   
+Ceci installera le module tkinter
 
-from PIL import Image, ImageFilter
+et vous etes bon !
 
-im = Image.open('data/src/lenna_square.png')
+## Utilisation
 
-print(im.format, im.size, im.mode)
-# PNG (512, 512) RGB
+Notez qu'actuellement notre code s'execute au mieux sur:
+* [Powershell](https://learn.microsoft.com/en-us/powershell/) (pour windows)
+* Et [Visual Studio Code](https://code.visualstudio.com/) (pour les autres systemes d'exploitations)
 
+1. Telechargez le fichier suivant https://downgit.github.io/#/home?url=https://github.com/Oscar-T24/projet-NSI-2/tree/main/Main. 
+2. Une fois le telechargement du fichier .zip finit, ouvrez le et et vous devriez avoir un dossier nommé "Main".
+    - 2.1 Si ce n'est pas le cas, renommez ainsi
 
-Par exemple, le traitement de la conversion en niveaux de gris (convert(‘L’)), de la rotation de 90 degrés (rotate(90)) et du flou gaussien (filter()) est effectué.
+<br />
+<br />
 
-new_im = im.convert('L').rotate(90).filter(ImageFilter.GaussianBlur())
+3. 
+    
+<br />
+<br />
 
-Affichez les images avec le logiciel par défaut du système d’exploitation.
+## ATTENTION ! : 
+- **contre-utilisations à indiquer ici...**
 
-Enregistrez l’image.
+- Veuillez faire attention à ouvrir le dossier parent **Main** lorsque vous ouvrez votre editeur (idealement VScode) et pas seulement le fichier code
+ **VEILLEZ À EXECUTER CHAQUE FONCTION DANS LE REPERTOIR PARENT MAIN**
 
-new_im.save('data/dst/lenna_square_pillow.jpg', quality=95)
+## Reference & Auteurs
 
+Si vous souhaitez obtenir tous les fichiers que nous avons utilisés (à savoir, les tests et documentation) vous pouvez visiter notre page github du projet du pendu à l'addresse suivante : 
 
+https://github.com/Oscar-T24/projet-NSI-2
 
+ou nous contacter:
+
+- Github:
+    - @Oscar-T24
+
+- Email:
+    - c.bordier24@ejm.org
