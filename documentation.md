@@ -1,39 +1,59 @@
-https://towardsdatascience.com/steganography-hiding-an-image-inside-another-77ca66b2acb1
+# Projet NSI 2 - Oscar , Arnaud et Jad 
 
-https://realpython.com/lessons/binary-numbers/
+Notre projet est une compilation de manipulation d'images executables dans le terminal avec une interface graphique basée sur tkinter.
 
+## Principe
 
-```
-from PIL import Image
+Ajouter description des fonctions ici
 
-im = Image.open('images/fusion.png').convert('RGB') # l'image fusionnée
-im_ini1 = Image.new('RGB',im.size) # on est contraint d'utiliser la taille de l'image fusionnée
-im_ini2 = Image.new('RGB',im.size)
+## Prérequis
 
-def decalage(n,dec=4):
-    """
-    param : un entier entre 0 et 255 , dec : intensité du decalage(par defaut 4)
-    out : un entier entre 0 et 255 ; dont les bits de poids faibles ont été décalés vers les bits de poids fort
-    """
-    # comme on fait le processus inverse, on utilise le bitwise das l'autre sens
-    return n << dec
+Nous vous recommendons plusieurs choses avant avant de telecharger et lancer votre code:
+- Vérifier que vous avez installé la librairie [tkinter] 
 
-def masque(n,dec=4):
-    """
-    param : un entier entre 0 et 255 , dec : intensité du masquage(par defaut 4)
-    out : un entier entre 0 et 255 ; sans bits de poids faibles
-    """
-    return n & 0b11110000  # opérateur bitwise qui compare la valeur binaire de n et masque(deja binaire) et renvoi la partie ou les deux morceaux binaires 's'overlappent'
+Pour cela, utiliez le package manager [pip](https://pip.pypa.io/en/stable/) pour installer [tkinter]
 
+```bash
+pip3 install tkinter
+```   
+Ceci installera le module tkinter
 
-for x in range(im.width):
-    for y in range(im.height):
-        r,v,b = im.getpixel((x,y))
-        r1,v1,b1 = masque(r),masque(v),masque(b)
-        r2,v2,b2 = masque(decalage(r)),masque(decalage(r)),masque(decalage(r))
-        im_ini1.putpixel((x,y),(r1,v1,b1))
-        im_ini2.putpixel((x,y),(r2,v2,b2))
+et vous etes bon !
 
-im_ini1.show()
-im_ini2.show()
-```
+## Utilisation
+
+Notez qu'actuellement notre code s'execute au mieux sur:
+* [Powershell](https://learn.microsoft.com/en-us/powershell/) (pour windows)
+* Et [Visual Studio Code](https://code.visualstudio.com/) (pour les autres systemes d'exploitations)
+
+1. Telechargez le fichier suivant https://downgit.github.io/#/home?url=https://github.com/Oscar-T24/projet-NSI-2/tree/main/Main. 
+2. Une fois le telechargement du fichier .zip finit, ouvrez le et et vous devriez avoir un dossier nommé "Main".
+    - 2.1 Si ce n'est pas le cas, renommez ainsi
+
+<br />
+<br />
+
+3. 
+    
+<br />
+<br />
+
+## ATTENTION ! : 
+- **contre-utilisations à indiquer ici...**
+
+- Veuillez faire attention à ouvrir le dossier parent **Main** lorsque vous ouvrez votre editeur (idealement VScode) et pas seulement le fichier code
+ **VEILLEZ À EXECUTER CHAQUE FONCTION DANS LE REPERTOIR PARENT MAIN**
+
+## Reference & Auteurs
+
+Si vous souhaitez obtenir tous les fichiers que nous avons utilisés (à savoir, les tests et documentation) vous pouvez visiter notre page github du projet du pendu à l'addresse suivante : 
+
+https://github.com/Oscar-T24/projet-NSI-2
+
+ou nous contacter:
+
+- Github:
+    - @Oscar-T24
+
+- Email:
+    - c.bordier24@ejm.org
