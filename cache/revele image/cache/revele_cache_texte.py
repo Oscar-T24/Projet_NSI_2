@@ -11,6 +11,7 @@ chr(x) : binnaire (obxxxxxxxx) --> caractere ASCII
 '''
 from PIL import Image
 from methode_Cesar import encode_words, decode_words
+import time
 
 def masque(n,mode,dec=4):
     """
@@ -69,7 +70,6 @@ def trouve_texte(image):
     retrouve un texte caché dans une image
     out : le message caché
     """
-    message = ''
     binaire = ''
     for x in range(image.width):
         for y in range(image.height):
@@ -88,10 +88,11 @@ def trouve_texte(image):
     octets = ''.join([chr(int('0b'+binaire[i+1:i+8],2)) for i in range(0,longueur,8)]) #ecriture des octets
     return decode_words(octets,int(input('entrer la clé de dechiffrage')))
 
-im1 = Image.open('images/11.png').convert('RGB')
-cache_texte(input('entrer un message à cacher'),im1)
-im_a_decoder = Image.open('images/messager.png').convert('RGB')
-print(trouve_texte(im_a_decoder))
+#im1 = Image.open('images/11.png').convert('RGB')
+#cache_texte(input('entrer un message à cacher'),im1)
+#time.sleep(5)
+#im_a_decoder = Image.open('images/messager.png').convert('RGB')
+#print(trouve_texte(im_a_decoder))
 
 ''' texte lorem ipsum pour tester ! 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit.

@@ -9,8 +9,11 @@ import time
 
 def choisir_image():
     def cache():
-          bits=passw_var.get()
-          cache_texte(bits, Image.open('images/'+clicked.get()))     
+          message=passw_var.get()
+          if message != '':
+            cache_texte(message, Image.open('images/'+clicked.get()))    
+          else:
+            raise Exception('VEUILLEZ ENTRER UN MESSAGE') from cache_texte()
     menu1 = Tk()
     menu1.geometry( "300x600" )
     passw_var=StringVar()
@@ -43,7 +46,7 @@ def choisir_image():
     label2 = Label(menu1 , text = " " )
     label2.pack()
     button = Button( menu1 , text = "précharger image 1" ,command = lambda:image(1)).pack() # .grid(row=1,column=0)
-    reveler = Button(menu1,text = 'reveler un message',command = lambda:trouve_texte(Image.open('images/'+clicked.get()))).pack()
+    reveler = Button(menu1,text = 'reveler un message',command = lambda:print(trouve_texte(Image.open('images/'+clicked.get())))).pack()
     cacher = Button(menu1,text = 'cacher du texte dans l"image selectionnnée',command = cache).pack()
     comfirmer = Button(menu1, text = 'fermer et commencer',command = lambda:menu1.quit()).pack()
     entree = Entry(menu1, textvariable = passw_var, font = ('calibre',10,'normal')).pack()
