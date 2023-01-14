@@ -87,7 +87,7 @@ def choisir_image():
    button2 = Button( menu1 , text = "précharger image 2" ,command = lambda:image(2)).pack()
    reveler = Button(menu1,text = 'reveler une image',command = retrouve).pack()
    cacher = Button(menu1,text = 'cacher l"image 2 dans l"image 1',command = cache).pack()
-   comfirmer = Button(menu1, text = 'fermer et commencer',command = lambda:menu1.quit()).pack()
+   comfirmer = Button(menu1, text = 'fermer / retourner au menu principal',command = lambda:menu1.quit()).pack()
    entree = Entry(menu1, textvariable = passw_var, font = ('calibre',10,'normal')).pack()
 
    menu1.mainloop() # executer le premier menu 
