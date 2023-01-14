@@ -1,30 +1,11 @@
 import string
 import sys
 
-# The word to be encoded shifts by 5 to the right, while the word to be decoded shifts by 5 to the left.
-#shift = 20
-'''
-print(' Caesar Cipher '.center(40, '*'))
 
-choices = ['e', 'd']
-user_choice = input('Do you wish to [e]ncode, [d]ecode, or quit (any other letter)?: ').lower()
-
-if user_choice not in choices:
-    print('Program closed.')
-    sys.exit()
-
-word = input('Enter the word: ')
-'''
-
-# ENCODING FUNCTION
 def encode_words(words, shifts):
-    """This encodes a word using Caesar cipher."""
-
-    # Variable for storing the encoded word.
+    """encoder un message ASCII en Cesar """
     encoded_word = ''
-
     for i in words:
-
         # Check for space and tab
         if ord(i) == 32 or ord(i) == 9:
             shifted_word = ord(i)
@@ -52,9 +33,6 @@ def encode_words(words, shifts):
 
         encoded_word = encoded_word + chr(shifted_word)
     return encoded_word
-    #print('Word:', word)
-    #print('Encoded word:', encoded_word)
-
 
 # DECODING FUNCTION
 def decode_words(words, shifts):
@@ -92,16 +70,3 @@ def decode_words(words, shifts):
     return decoded_word
     #print('Word:', word)
     #print('Decoded word:', decoded_word)
-
-
-def encode_decode(words, shifts, choice):
-    """This checks if the users want to encode or decode, and calls the required function."""
-
-    if choice == 'e':
-        encode_words(words, shifts)
-    elif choice == 'd':
-        decode_words(words, shifts)
-
-if __name__ == 'main':
-    #encode_decode(word, shift, user_choice)
-    pass

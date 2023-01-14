@@ -47,12 +47,15 @@ def cache_texte(message,image):
     binaire = ''.join([digit for octet in binaire for digit in octet[2:]]) # binaire : liste de digits les uns derriere les autres sans 0b
     indice = 0 
 
-    print('message codé en bits: ',binaire)
+    #print('message codé en bits: ',binaire)
     for x in range(image.width):
         for y in range(image.height):
             #image_final.putpixel((x,y),(r,v,b))
             if indice < len(binaire): # si o a dépassé l'indice des octets à écrire et qu'il nous reste des pixels, arreter le processus d'ecriture
-                r,v,b = image.getpixel((x,y))
+                try :
+                    r,v,b = image.getpixel((x,y))
+                except ValueError:
+                    r,v,b,t = image.getpixel((x,y)) # si l'image est au format PNG, ajouter une 4e composante, la transparence
                 r,v,b = masque(r,'fort'),masque(v,'fort'),masque(b,'fort')
                     #enleve le bit de poids le plus faible. On pourrai faire plus simplement en arrondissant la composante au nombre pair le plus proche(ce qui reviendrai à enlever le premier bit 1)
                 image_final.putpixel((x,y),(r  | int(binaire[indice:indice+1]),v |int(binaire[indice+1:indice+2]),b))
@@ -73,7 +76,10 @@ def trouve_texte(image):
     binaire = ''
     for x in range(image.width):
         for y in range(image.height):
-            r,v,b = image.getpixel((x,y))
+            try :
+                r,v,b = image.getpixel((x,y))
+            except ValueError:
+                r,v,b,t = image.getpixel((x,y))
             if b % 2 != 0: # si on a un 1 comme bit de poids faible, on arrete de lire les octets(= fin de message)
                 longueur = len(binaire)
                 break
