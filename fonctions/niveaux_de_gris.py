@@ -1,8 +1,6 @@
 import PIL
 from PIL import Image
 
-image = Image.open('images/6.png').convert('RGB')
-
 def niveaux_de_gris(image):
     '''
     image --> image
@@ -18,4 +16,5 @@ def niveaux_de_gris(image):
     image.show()
             
 
+image = Image.open('images/6.png').convert('RGB')
 niveaux_de_gris(image)
