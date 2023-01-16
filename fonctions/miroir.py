@@ -1,8 +1,6 @@
 import PIL
 from PIL import Image
 
-image = Image.open('images/6.png').convert('RGB')
-
 def miroir(image):
     '''
     image --> image
@@ -18,4 +16,5 @@ def miroir(image):
     image2.show() # On affiche l'image
 
 # On appelle la fonction
+image = Image.open('images/6.png').convert('RGB')
 miroir('images/6.png')
