@@ -35,14 +35,14 @@ def decalage(n,mode,dec=4):
         case 'gauche':
             return n << dec 
 # -------------------- CACHE TEXTE -------------------------------------------
-def cache_texte(message,image):
+def cache_texte(message,image,cle):
     """
     param : un message en caractere ASCII , et une image dans laquelle encoder le message
     out : une image codée avec un texte
     """
     image_final = image.copy() #copier l'image permet d'evioter à parcourir à nouveau l'image enj entier mais juste la partie dans laquelle on code le message
     longueur = bin(len(message))[:2]
-    message = encode_words(message,int(input('entrer un decalage pour crypter le texte. Ne l"oubliez pas pour recupéer le message!')))
+    message = encode_words(message,cle)
     binaire = [format(ord(x), '#010b') for x in message] # binaire : liste d'octets codant chacun un caratère (au format 0bxxxxxxxx en string)
     binaire = ''.join([digit for octet in binaire for digit in octet[2:]]) # binaire : liste de digits les uns derriere les autres sans 0b
     indice = 0 
@@ -68,7 +68,7 @@ def cache_texte(message,image):
     print('message de longueur', len(binaire))
     print(binaire)
 # -------------------- TROUVE TEXTE -------------------------------------------
-def trouve_texte(image):
+def trouve_texte(image,cle):
     """
     retrouve un texte caché dans une image
     out : le message caché
@@ -92,7 +92,7 @@ def trouve_texte(image):
     
     print('message codé en bits retrouvé : ',binaire)
     octets = ''.join([chr(int('0b'+binaire[i+1:i+8],2)) for i in range(0,longueur,8)]) #ecriture des octets
-    return decode_words(octets,int(input('entrer la clé de dechiffrage')))
+    return decode_words(octets,cle)
 
 #im1 = Image.open('images/11.png').convert('RGB')
 #cache_texte(input('entrer un message à cacher'),im1)

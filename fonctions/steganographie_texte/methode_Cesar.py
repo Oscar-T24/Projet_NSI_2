@@ -4,25 +4,17 @@ import sys
 
 def encode_words(words, shifts):
     """encoder un message ASCII en Cesar """
-    encoded_word = ''
+    mot_encode = ''
     for i in words:
-        # Check for space and tab
-        if ord(i) == 32 or ord(i) == 9:
+        if ord(i) == 32 or ord(i) == 9 or i in string.punctuation: # verifie les espaces et les tabs : ne pas ajouter de shifts pour ces caracteres ; si il y a de la ponctuation, ne pas shifter le caractere
             shifted_word = ord(i)
-
-        # Check for punctuations
-        elif i in string.punctuation:
-            shifted_word = ord(i)
-
         # Check if the character is lowercase or uppercase
         elif i.islower():
             shifted_word = ord(i) + shifts
-
             # Lowercase spans from 97 to 122 (decimal) on the ASCII table
             # If the chars exceeds 122, we get the number it uses to exceed it and add to 96 (the character before a)
             if shifted_word > 122:
                 shifted_word = (shifted_word - 122) + 96
-
         else:
             shifted_word = ord(i) + shifts
 
@@ -31,8 +23,8 @@ def encode_words(words, shifts):
             if shifted_word > 90:
                 shifted_word = (shifted_word - 90) + 64
 
-        encoded_word = encoded_word + chr(shifted_word)
-    return encoded_word
+        mot_encode = mot_encode + chr(shifted_word)
+    return mot_encode
 
 # DECODING FUNCTION
 def decode_words(words, shifts):
