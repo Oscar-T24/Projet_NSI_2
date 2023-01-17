@@ -1,4 +1,8 @@
 from PIL import Image, ImageFilter
+import tkinter
+from tkinter import *
+from PIL import Image, ImageTk
+import os
 
 # NE FONCTIONERA PAS AVEC UNE IMAGE JPEG
 # CREE UNE IMAGE FLOUTÉE E FAISANT LA MOYENNE DES PIXELKS ENVIRONNNANTS
@@ -44,7 +48,7 @@ def flou(image,rayon):
     rgb_im_final.show()
     rgb_im.show()
 
-
+'''
 # CETTE FONCTION ABOUTIE A FAIRE LE FILTRE BOXBLUR DE LA LIBRAIRIE PIL
 
 # Opens a image in RGB mode
@@ -55,3 +59,49 @@ im1 = im.filter(ImageFilter.BoxBlur(12))
 
 # Shows the image in image viewer
 im1.show()
+'''
+def choisir_image():   
+    menu1 = Tk()
+    menu1.geometry( "200x400" )
+    passw_var=StringVar()
+    cletexte=StringVar()
+
+    def image(image):
+        if image == 1: 
+          label.config(text = clicked.get())
+          try :
+            image1 = Image.open('images/'+clicked.get()).resize((170,170))
+            test = ImageTk.PhotoImage(image1)
+            label1 = tkinter.Label(image=test)
+            label1.image = test
+            label1.place(x=5, y=200)
+            #time.sleep(5)
+            #label1.destroy()
+
+          except FileNotFoundError:
+            print('fichier inexistant')
+        
+    options = os.listdir('images')
+    options = [e for e in options if '.png' or '.jpg' or '.jpeg' in e and 'fusion.png' not in e]
+    clicked = StringVar()
+    clicked.set( "choisissez une photo no 1" )
+    drop = OptionMenu( menu1 , clicked , *options )
+    drop.grid(row = 0, column = 0, pady = 5)
+    label = Label(menu1 , text = " " )
+    label2 = Label(menu1 , text = " " )
+    button = Button( menu1 , text = "précharger image 1" ,command = lambda:image(1))
+    button.grid(row = 1, column = 0, pady = 5)
+    reveler = Button(menu1,text = 'effectuer un filtre flou',command = lambda:flou(Image.open('images/'+clicked.get()),int(cletexte.get())))
+    reveler.grid(row = 2, column = 0, pady = 5)
+    comfirmer = Button(menu1, text = 'fermer cette fenetre',command = lambda:menu1.quit())
+    comfirmer.grid(row = 4, column = 0, pady = 5)
+    entree2 = Entry(menu1, textvariable = cletexte, font = ('calibre',10,'normal'))
+    entree2.grid(row = 5,column = 0,pady = 0)
+    label2 = Label(menu1, text = "entrer le rayon de floutage")
+    label2.grid(row = 6,column = 0,pady = 0)
+ 
+    menu1.mainloop() # executer le premier menu 
+
+    return 
+
+choisir_image()

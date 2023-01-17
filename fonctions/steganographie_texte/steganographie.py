@@ -41,7 +41,6 @@ def choisir_image():
     clicked.set( "choisissez une photo no 1" )
     drop = OptionMenu( menu1 , clicked , *options )
     drop.grid(row = 0, column = 0, pady = 5)
-    # instatiation des boutons à partir de la classe Bouton
     label = Label(menu1 , text = " " )
     label2 = Label(menu1 , text = " " )
     button = Button( menu1 , text = "précharger image 1" ,command = lambda:image(1))

@@ -9,10 +9,6 @@ import time
 
 
 def menu_principal():
-    def cache():
-        pass
-    def image(image):
-        pass  
     menu1 = Tk()
     menu1.geometry( "300x600" )
     # instatiation des boutons à partir de la classe Bouton
@@ -32,4 +28,6 @@ def menu_principal():
 
 
 menu_principal()
+
+
 
