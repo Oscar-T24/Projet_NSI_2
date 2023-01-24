@@ -62,10 +62,15 @@ def cache_texte(message,image,cle):
             if indice > len(binaire): # on écrit un drapeau pour marquer la fin du message : si une composante bleu possède un 1 en bit de poids faible, on arrete de lire le message(car on met un 0 partout autrement)
                 image_final.putpixel((x,y),(r,v,b | 0b00000001))
                 break     
-    image_final.show()
-    image_final.save('images/messager.png', format = 'PNG')
-    print('message de longueur', len(binaire))
-    print(binaire)
+    image1_size = image.size
+    image2_size = image_final.size
+    new_image = Image.new('RGB',(2*image1_size[0], image1_size[1]), (250,250,250))
+    new_image.paste(image,(0,0))
+    new_image.paste(image_final,(image1_size[0],0))
+    image_final.save("images/messager.png",format = "PNG")
+    new_image.show()
+    #print('message de longueur', len(binaire))
+    #print(binaire)
 # -------------------- TROUVE TEXTE -------------------------------------------
 def trouve_texte(image,cle):
     """
