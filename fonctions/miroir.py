@@ -12,10 +12,18 @@ def miroir(image):
     # On récupère les pixels de l'image et on inverse l'image horizontalement
     pixels = [[image.getpixel((x, y)) for x in range(image.width)] for y in range(image.height)]
     pixels = [ligne[::-1] for ligne in pixels]
-    image2 = Image.new('RGB', (image.width, image.height)) # On crée une image vide
-    image2.putdata([pixel for ligne in pixels for pixel in ligne]) # On met les pixels dans l'image
-    image2.save('images/miroir.png') # On sauvegarde l'image
-    image2.show() # On affiche l'image
+    final = Image.new('RGB', (image.width, image.height)) # On crée une image vide
+    final.putdata([pixel for ligne in pixels for pixel in ligne]) # On met les pixels dans l'image
+    final.save('images/miroir.png') # On sauvegarde l'image
+    final.show() # On affiche l'image
+
+    image1_size = image.size
+    image2_size = final.size
+    new_image = Image.new('RGB',(2*image1_size[0], image1_size[1]), (250,250,250))
+    new_image.paste(image,(0,0))
+    new_image.paste(final,(image1_size[0],0))
+    new_image.save("images/merged_image.jpg","PNG")
+    new_image.show()
 
 '''
 # On appelle la fonction
@@ -32,8 +40,8 @@ def choisir_image():
         if image == 1: 
           label.config(text = clicked.get())
           try :
-            image1 = Image.open('images/'+clicked.get()).resize((170,170))
-            test = ImageTk.PhotoImage(image1)
+            initial = Image.open('images/'+clicked.get()).resize((170,170))
+            test = ImageTk.PhotoImage(initial)
             label1 = tkinter.Label(image=test)
             label1.image = test
             label1.place(x=5, y=200)

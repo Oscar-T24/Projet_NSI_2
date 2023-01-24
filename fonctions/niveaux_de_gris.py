@@ -10,6 +10,7 @@ def niveaux_de_gris(image):
     image --> image
     renvoie une image en noir et blanc
     '''
+    final = Image.new('RGB',(image.size))
     lar,lon = image.width , image.height
     for x in range (lar):
         for y in range (lon):
@@ -18,9 +19,16 @@ def niveaux_de_gris(image):
             except ValueError:
                 r,g,b,t = image.getpixel((x,y))
             moyenne_gris = round((r+g+b)/3)
-            image.putpixel((x,y),(moyenne_gris,moyenne_gris,moyenne_gris))
-    image.save('images/niveaux_de_gris.png')
-    image.show()
+            final.putpixel((x,y),(moyenne_gris,moyenne_gris,moyenne_gris))
+    final.save('images/niveaux_de_gris.png')
+
+    image1_size = image.size
+    image2_size = final.size
+    new_image = Image.new('RGB',(2*image1_size[0], image1_size[1]), (250,250,250))
+    new_image.paste(image,(0,0))
+    new_image.paste(final,(image1_size[0],0))
+    new_image.save("images/niveaux_de_gris","PNG")
+    new_image.show()
             
 def choisir_image():   
     menu1 = Tk()
@@ -32,8 +40,8 @@ def choisir_image():
         if image == 1: 
           label.config(text = clicked.get())
           try :
-            image1 = Image.open('images/'+clicked.get()).resize((170,170))
-            test = ImageTk.PhotoImage(image1)
+            initial = Image.open('images/'+clicked.get()).resize((170,170))
+            test = ImageTk.PhotoImage(initial)
             label1 = tkinter.Label(image=test)
             label1.image = test
             label1.place(x=5, y=200)

@@ -7,7 +7,6 @@ FONCTION INTEGRÉS UTILES :
 ord(x) : caractere ASCII --> entier entre 0-255
 chr(x) : binnaire (obxxxxxxxx) --> caractere ASCII
 .rjust(8,'0') : rajoute des 0 pour avoir 8 bits (un octet)
-
 '''
 from PIL import Image
 from methode_Cesar import encode_words, decode_words
@@ -94,12 +93,13 @@ def trouve_texte(image,cle):
     octets = ''.join([chr(int('0b'+binaire[i+1:i+8],2)) for i in range(0,longueur,8)]) #ecriture des octets
     return decode_words(octets,cle)
 
-#im1 = Image.open('images/11.png').convert('RGB')
-#cache_texte(input('entrer un message à cacher'),im1)
-#time.sleep(5)
-#im_a_decoder = Image.open('images/messager.png').convert('RGB')
-#print(trouve_texte(im_a_decoder))
-
+'''
+im1 = Image.open('images/11.png').convert('RGB')
+cache_texte(input('entrer un message à cacher'),im1,4)
+time.sleep(5)
+im_a_decoder = Image.open('images/messager.png').convert('RGB')
+print(trouve_texte(im_a_decoder,4))
+'''
 ''' texte lorem ipsum pour tester ! 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  Vestibulum commodo fermentum massa at dignissim. Sed vel

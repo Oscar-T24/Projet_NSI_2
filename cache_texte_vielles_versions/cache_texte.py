@@ -26,7 +26,7 @@ def decalage(n,mode,dec=4):
             return n << dec 
 
 def cache_texte(message,image):
-    image_final = image.copy() # soit on crée unne ouvelle image, soit on copie l'autrre ca reste à décider
+    final = image.copy() # soit on crée unne ouvelle image, soit on copie l'autrre ca reste à décider
     binaire = [format(ord(x), '#010b') for x in message] 
     binaire = [[decalage(masque(int(e,2),'fort'),'droite')]+[masque(int(e,2),'faible')] for e in binaire]
     binaire = [element for sublist in binaire for element in sublist]
@@ -41,23 +41,23 @@ def cache_texte(message,image):
                 break
             '''
             # ---------------- UNIQUEMET POUR DEBOGAGE
-            rouge,vert,bleu = image_final.getpixel((x,y))
+            rouge,vert,bleu = final.getpixel((x,y))
             liste_rgb1.append([rouge,vert,bleu])
             # -----------------
             '''
             r,v,b = image.getpixel((x,y))
             r,v = masque(r,'fort'), masque(v,'fort')
-            image_final.putpixel((x,y),(r+binaire[indice],v+binaire[indice+1],b))
-    image_final.show()
+            final.putpixel((x,y),(r+binaire[indice],v+binaire[indice+1],b))
+    final.show()
     '''# -------------------- uniquempent debogage
     liste_rgb2 = []
     for x in range(2):
         for y in range(2):
-            rouge,vert,bleu = image_final.getpixel((x,y))
+            rouge,vert,bleu = final.getpixel((x,y))
             liste_rgb2.append([rouge,vert,bleu])
 
     '''# --------------------
-    image_final.save('images/messager.png', format = 'PNG')
+    final.save('images/messager.png', format = 'PNG')
     
     print('message de longueur', len(message)) # ATTENTION LA LONGUEUR DU MESSAGE EST DEUX FOIS MOINS LONGUE DE CELLE DES COMPOSATES À PARCOURIR
     '''

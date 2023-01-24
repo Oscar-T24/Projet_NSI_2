@@ -24,8 +24,8 @@ def choisir_image():
         if image == 1: 
           label.config(text = clicked.get())
           try :
-            image1 = Image.open('images/'+clicked.get()).resize((170,170))
-            test = ImageTk.PhotoImage(image1)
+            initial = Image.open('images/'+clicked.get()).resize((170,170))
+            test = ImageTk.PhotoImage(initial)
             label1 = tkinter.Label(image=test)
             label1.image = test
             label1.place(x=60, y=300)
@@ -53,8 +53,8 @@ def choisir_image():
     comfirmer.grid(row = 4, column = 0, pady = 5)
     entree = Entry(menu1, textvariable = passw_var, font = ('calibre',10,'normal'))
     entree.grid(row = 5,column = 0,pady = 5)
-    label = Label(menu1, text = "entrez votre message")
-    label.grid(row = 6,column = 0,pady = 0)
+    label3 = Label(menu1, text = "entrez votre message")
+    label3.grid(row = 6,column = 0,pady = 0)
     entree2 = Entry(menu1, textvariable = cletexte, font = ('calibre',10,'normal'))
     entree2.grid(row = 7,column = 0,pady = 5)
     label2 = Label(menu1, text = "entrer la clé de (dé)chiffrage")

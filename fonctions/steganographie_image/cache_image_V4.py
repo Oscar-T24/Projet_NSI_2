@@ -9,7 +9,7 @@ def masque_faibles(n,dec):
     masque = 0b1111111100000000 >> dec # étape 1 : décaler le 1 de dec bits(celui de base est sur 16 bitys)
     masque & 0b11111111 #étape 2 : couper les bits en trop
 
-    # EXEMPLE A TESTER : pour dec = 4, 0b1111111100000000 >> dec donne masque = 0b11110000 ou equivalent en entier
+    #EXEMPLE : pour dec = 4, 0b1111111100000000 >> dec donne masque = 0b11110000 ou equivalent en entier
 
     return n & masque  # opérateur bitwise qui compare la valeur binaire de n et masque(deja binaire) et renvoi la partie ou les deux morceaux binaires 's'overlappent'
 

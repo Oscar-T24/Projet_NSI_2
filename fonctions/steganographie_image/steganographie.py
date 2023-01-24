@@ -42,8 +42,8 @@ def choisir_image():
       if image == 2:
         label.config(text = clicked2.get())
         try :
-         image2 = Image.open('images/'+clicked2.get()).resize((170,170))
-         test2 = ImageTk.PhotoImage(image2)
+         final = Image.open('images/'+clicked2.get()).resize((170,170))
+         test2 = ImageTk.PhotoImage(final)
          label2 = tkinter.Label(image=test2)
          label2.image = test2
          label2.place(x=75, y=415)
@@ -55,8 +55,8 @@ def choisir_image():
       elif image == 1: 
         label.config(text = clicked.get())
         try :
-         image1 = Image.open('images/'+clicked.get()).resize((170,170))
-         test = ImageTk.PhotoImage(image1)
+         initial = Image.open('images/'+clicked.get()).resize((170,170))
+         test = ImageTk.PhotoImage(initial)
          label1 = tkinter.Label(image=test)
          label1.image = test
          label1.place(x=75, y=260)

@@ -8,7 +8,7 @@ def retrouve_image(image):
     et renvoi la premiere image recomposée (a quelques erreur pres)
     '''
 
-    image_final = Image.new('RGB',(image.size))
+    final = Image.new('RGB',(image.size))
     for x in range(image.width):
         for y in range(image.height):
             #onn doit récupérer les 5 bits de poids fort et faire l'inverse des 3 derniers
@@ -24,9 +24,9 @@ def retrouve_image(image):
             print(len(bits), len(pixel))
             pixel = [int(pixel[i]+bits[i],2) for i in range(len(pixel))] # on reconverti tout en decimal
 
-            image_final.putpixel((x,y),tuple(pixel))
+            final.putpixel((x,y),tuple(pixel))
 
-    image_final.show()
+    final.show()
 
 
 retrouve_image(image)

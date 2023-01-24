@@ -5,8 +5,8 @@ from PIL import Image, ImageTk
 root = Tk()
 
 # Create a photoimage object of the image in the path
-image1 = Image.open("images/10.png")
-test = ImageTk.PhotoImage(image1)
+initial = Image.open("images/10.png")
+test = ImageTk.PhotoImage(initial)
 
 label1 = tkinter.Label(image=test,anchor= CENTER)
 label1.pack(expand = True)

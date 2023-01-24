@@ -26,7 +26,6 @@ def menu_principal():
 
     menu1.mainloop() # executer le premier menu 
 
-
 menu_principal()
 
 
