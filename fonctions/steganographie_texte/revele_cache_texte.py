@@ -91,10 +91,12 @@ def trouve_texte(image,cle):
                 r,v = masque(r,'faible'),masque(v,'faible')
             binaire+=str(r)
             binaire+=str(v)
-
-    binaire = binaire[:longueur]
+    try:
+        binaire = binaire[:longueur]
+    except UnboundLocalError :
+        print('MESSAGE TROP LONG : LE MESSAGE DEPASSE DE L"IMAGE ET NE PEUT PAS ETRE LU')
     
-    print('message codé en bits retrouvé : ',binaire)
+    print('message co dé en bits retrouvé : ',binaire)
     octets = ''.join([chr(int('0b'+binaire[i+1:i+8],2)) for i in range(0,longueur,8)]) #ecriture des octets
     return decode_words(octets,cle)
 
