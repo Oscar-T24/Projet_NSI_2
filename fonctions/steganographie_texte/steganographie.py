@@ -12,7 +12,10 @@ def choisir_image():
           message=passw_var.get()
           cle=cletexte.get()
           if message != '':
-            cache_texte(message, Image.open('images/'+clicked.get()),int(cle))    
+            try:
+              cache_texte(message, Image.open('images/'+clicked.get()),int(cle))    
+            except ValueError:
+               print('VEUILLEZ ENTRER UNE CLEDE DECHIFFRAGE : NE LAISSEZ PAS VIDE')
           else:
             raise Exception('VEUILLEZ ENTRER UN MESSAGE') from cache_texte()
     menu1 = Tk()

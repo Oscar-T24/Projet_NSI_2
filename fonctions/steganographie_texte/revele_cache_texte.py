@@ -21,8 +21,9 @@ def masque(n,mode,dec=4):
         case 'faible':
             return n & 0b00000011
         case 'fort':
-            return n & 0b11111100 
+            return n & 0b11111100
 
+'''
 def decalage(n,mode,dec=4):
     """
     param : un entier entre 0 et 255 , dec : intensité du decalage(par defaut 4)
@@ -33,6 +34,7 @@ def decalage(n,mode,dec=4):
             return n >> dec 
         case 'gauche':
             return n << dec 
+'''
 # -------------------- CACHE TEXTE -------------------------------------------
 def cache_texte(message,image,cle):
     """
@@ -98,6 +100,7 @@ def trouve_texte(image,cle):
     
     print('message co dé en bits retrouvé : ',binaire)
     octets = ''.join([chr(int('0b'+binaire[i+1:i+8],2)) for i in range(0,longueur,8)]) #ecriture des octets
+
     return decode_words(octets,cle)
 
 '''
